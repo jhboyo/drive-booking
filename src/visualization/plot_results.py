@@ -178,7 +178,7 @@ def plot_reward_distribution(save_path: str = None):
 
     fig, ax = plt.subplots(figsize=(10, 6))
 
-    bp = ax.boxplot(data, labels=labels, patch_artist=True)
+    bp = ax.boxplot(data, tick_labels=labels, patch_artist=True)
 
     # 색상 적용
     for patch, color in zip(bp['boxes'], colors):

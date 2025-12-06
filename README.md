@@ -132,7 +132,7 @@ Agent: "싼타페 하이브리드 추천드립니다"    ← Action 3: 추천 �
 ## 🏗️ 시스템 아키텍처
 
 ```
-고객 입력
+고객 웹사이트 접속
     ↓
 ┌─────────────────────────────┐
 │  Phase 1: 시승 차량 추천    │
@@ -142,6 +142,12 @@ Agent: "싼타페 하이브리드 추천드립니다"    ← Action 3: 추천 �
 └─────────────────────────────┘
     ↓ (추천 차량 목록)
 ┌─────────────────────────────┐
+│  장소 선택 (규칙 기반)       │
+│  - 위치 권한 O → GPS 기반   │
+│  - 위치 권한 X → 지역 질문  │
+└─────────────────────────────┘
+    ↓ (선택된 대리점)
+┌─────────────────────────────┐
 │  Phase 2: 스케줄링          │
 │  - DQN                      │
 │  - State: 센터 상태         │
@@ -150,6 +156,57 @@ Agent: "싼타페 하이브리드 추천드립니다"    ← Action 3: 추천 �
     ↓
 최종 스케줄 + 예약 확정
 ```
+
+### 단계별 역할
+
+| 단계 | 목적 | 방식 |
+|------|------|------|
+| **Phase 1** | 최적 차량 추천 | Q-Learning (시뮬레이션 학습) |
+| **장소 선택** | 시승 대리점 선택 | 규칙 기반 (GPS 또는 질문) |
+| **Phase 2** | 최적 시간 배정 | DQN (시뮬레이션 학습) |
+
+### Phase 1 목적 및 구조
+
+Phase 1은 **시뮬레이션 기반 학습**을 통해 최적의 질문 전략을 학습한 모델을 생성하는 것이 목적임.
+
+#### 왜 시뮬레이션인가?
+
+| 방식 | 장점 | 단점 |
+|------|------|------|
+| 실제 고객으로 학습 | 실제 데이터 | 수천 번 시행착오 → 고객 경험 악화 |
+| **시뮬레이션으로 학습** | 빠른 탐색, 무한 반복 가능 | 시뮬레이터 품질에 의존 |
+
+#### Training vs Deployment
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  Training Phase (현재 구현)                                  │
+├─────────────────────────────────────────────────────────────┤
+│  1. 시뮬레이션 고객 생성 (랜덤 프로필: 예산, 가족 수 등)       │
+│  2. Agent가 질문 선택 (ε-greedy 탐험)                        │
+│  3. Environment가 고객 대신 자동 응답 (숨겨진 선호도 기반)     │
+│  4. Agent가 차량 추천                                        │
+│  5. Environment가 Reward 자동 계산 (매칭 점수 기반)           │
+│  6. Q-table 업데이트 → 1000+ 에피소드 반복                   │
+└─────────────────────────────────────────────────────────────┘
+                              ↓ 학습된 모델 저장
+┌─────────────────────────────────────────────────────────────┐
+│  Deployment Phase (추후 구현)                                │
+├─────────────────────────────────────────────────────────────┤
+│  1. 실제 고객이 질문에 답변                                   │
+│  2. 학습된 모델이 최적 질문 선택 (Greedy)                     │
+│  3. 학습된 모델이 차량 추천                                   │
+│  4. 실제 고객 만족도 피드백 수집                              │
+└─────────────────────────────────────────────────────────────┘
+```
+
+#### Phase 1 학습 결과
+
+시뮬레이션 학습을 통해 Agent가 스스로 터득하는 것:
+
+- ✅ 어떤 질문 순서가 효율적인가
+- ✅ 몇 개의 질문 후 추천해야 하는가
+- ✅ 어떤 상황에서 어떤 차량을 추천해야 하는가
 
 ---
 
@@ -176,23 +233,65 @@ Agent: "싼타페 하이브리드 추천드립니다"    ← Action 3: 추천 �
 
 ## 🚀 실행 방법
 
+### 환경 설정
+
 ```bash
-# 환경 설정
 python -m venv venv
-source venv/bin/activate
+source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
+```
 
-# Phase 1 학습
-python src/train_phase1.py --episodes 1000
+### Phase 1 학습 (차량 추천)
 
-# Phase 2 학습
-python src/train_phase2.py --episodes 1000
+```bash
+# 기본 학습 (1000 에피소드)
+python -m src.train_phase1
 
-# 통합 시스템 학습
-python src/train_integrated.py --episodes 2000
+# 옵션 지정
+python -m src.train_phase1 --episodes 2000 --seed 42 --save-model
 
-# 평가
-python src/evaluate.py --model checkpoints/integrated_model.pth
+# 하이퍼파라미터 조정
+python -m src.train_phase1 --lr 0.1 --gamma 0.95 --epsilon-decay 0.998
+```
+
+| 옵션 | 기본값 | 설명 |
+|------|--------|------|
+| `--episodes` | 1000 | 학습 에피소드 수 |
+| `--seed` | 42 | 랜덤 시드 |
+| `--lr` | 0.1 | 학습률 (α) |
+| `--gamma` | 0.95 | 할인율 (γ) |
+| `--epsilon-decay` | 0.998 | 탐험률 감소율 |
+| `--save-model` | False | 모델 저장 여부 |
+
+### 평가
+
+```bash
+# 모든 에이전트 평가 (Random, Rule-based, Adaptive, Q-Learning)
+python -m src.evaluate
+
+# 저장된 모델 로드하여 평가
+python -m src.evaluate --model models/q_learning_model.json
+
+# 평가 에피소드 수 조정
+python -m src.evaluate --episodes 200
+
+# 결과를 JSON 파일로 저장
+python -m src.evaluate --save-results
+```
+
+| 옵션 | 기본값 | 설명 |
+|------|--------|------|
+| `--episodes` | 100 | 평가 에피소드 수 |
+| `--seed` | 42 | 랜덤 시드 |
+| `--model` | None | 로드할 Q-Learning 모델 경로 |
+| `--train-episodes` | 1000 | 모델 없을 때 학습 에피소드 수 |
+| `--save-results` | False | 결과 JSON 저장 여부 |
+
+### Phase 2 학습 (스케줄링) - 예정
+
+```bash
+# 추후 구현 예정
+python -m src.train_phase2 --episodes 1000
 ```
 
 ---

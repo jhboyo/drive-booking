@@ -34,14 +34,14 @@ env/
 *~
 
 # Jupyter Notebook
-.ipynb_checkpoints/
+.ipynb_models/
 
 # PyTorch
 *.pth
 *.pt
 
 # Project specific
-checkpoints/
+models/
 results/
 logs/
 *.log
