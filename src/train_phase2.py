@@ -71,7 +71,7 @@ def train_and_evaluate(
 
     # 모델 저장
     if save_model:
-        model_dir = Path(__file__).parent.parent / "models"
+        model_dir = Path(__file__).parent.parent / "checkpoints"
         model_dir.mkdir(parents=True, exist_ok=True)
         model_path = model_dir / "dqn_scheduling.pth"
         agent.save(str(model_path))
@@ -189,7 +189,7 @@ def main():
     args = parser.parse_args()
 
     if args.eval_only:
-        model_path = args.model_path or str(Path(__file__).parent.parent / "models" / "dqn_scheduling.pth")
+        model_path = args.model_path or str(Path(__file__).parent.parent / "checkpoints" / "dqn_scheduling.pth")
         evaluate_only(model_path, args.eval_episodes, args.seed)
     else:
         train_and_evaluate(args.episodes, args.eval_episodes, args.seed)

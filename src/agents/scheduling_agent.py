@@ -710,6 +710,6 @@ if __name__ == "__main__":
     print(f"평균 시도 횟수: {results['mean_attempts']:.2f}")
 
     # 모델 저장
-    save_path = Path(__file__).parent.parent.parent / "models" / "dqn_scheduling.pth"
+    save_path = Path(__file__).parent.parent.parent / "checkpoints" / "dqn_scheduling.pth"
     agent.save(str(save_path))
     print(f"\n모델 저장: {save_path}")

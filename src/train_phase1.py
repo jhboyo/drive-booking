@@ -20,7 +20,7 @@ from src.agents.q_learning_agent import QLearningAgent, evaluate_q_learning
 from src.baselines.random_baseline import evaluate_random_baseline
 from src.baselines.rule_based import evaluate_rule_based_baseline
 from src.env.recommendation_env import VehicleRecommendationEnv
-from src.visualization.plot_results import (
+from src.visualization.plot_phase1_results import (
     plot_learning_curve,
     plot_performance_comparison,
     plot_reward_distribution,
@@ -209,9 +209,9 @@ def run_training(args):
 
     # 모델 저장 (옵션)
     if args.save_model:
-        models_dir = project_root / "models"
-        models_dir.mkdir(exist_ok=True)
-        model_path = models_dir / f"q_learning_{timestamp}.json"
+        checkpoints_dir = project_root / "checkpoints"
+        checkpoints_dir.mkdir(exist_ok=True)
+        model_path = checkpoints_dir / f"q_learning_{timestamp}.json"
         agent.save(str(model_path))  # Q-table을 JSON으로 저장
         print(f"  모델 저장: {model_path}")
 

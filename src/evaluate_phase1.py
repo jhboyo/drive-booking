@@ -5,13 +5,13 @@ Phase 1 평가 스크립트
 
 사용법:
     # 모든 에이전트 평가
-    python -m src.evaluate
+    python -m src.evaluate_phase1
 
     # 저장된 모델 로드하여 평가
-    python -m src.evaluate --model models/q_learning_model.json
+    python -m src.evaluate_phase1 --model checkpoints/q_learning_model.json
 
     # 상세 출력
-    python -m src.evaluate --verbose --episodes 200
+    python -m src.evaluate_phase1 --verbose --episodes 200
 """
 
 import argparse
