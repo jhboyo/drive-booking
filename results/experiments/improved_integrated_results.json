@@ -1,0 +1,23 @@
+{
+  "experiment": "improved_integrated_system",
+  "description": "Availability-aware + Improved synergy bonus",
+  "training_config": {
+    "n_episodes": 1000,
+    "phase1_pretrain": 1000,
+    "phase2_pretrain": 1000
+  },
+  "results": {
+    "n_episodes": 100,
+    "mean_total_reward": 31.976791486291486,
+    "std_total_reward": 8.51548251409641,
+    "mean_phase1_reward": 9.841791486291486,
+    "mean_phase2_reward": 11.375,
+    "mean_synergy_bonus": 10.76,
+    "end_to_end_success_rate": 0.89,
+    "preferred_time_match_rate": 0.43,
+    "mean_questions": 0.0,
+    "mean_attempts": 1.16,
+    "mean_total_interactions": 2.57
+  },
+  "training_time": 3.6309471130371094
+}

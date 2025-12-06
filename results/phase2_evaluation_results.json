@@ -1,0 +1,51 @@
+{
+  "DQN": {
+    "agent": "DQN",
+    "n_episodes": 100,
+    "mean_reward": 9.95,
+    "std_reward": 8.521296849658507,
+    "min_reward": -8.0,
+    "max_reward": 17.0,
+    "booking_success_rate": 0.81,
+    "preferred_time_match_rate": 0.39,
+    "mean_attempts": 1.25,
+    "mean_episode_length": 1.55,
+    "total_training_episodes": 500
+  },
+  "Random": {
+    "agent": "Random",
+    "n_episodes": 100,
+    "mean_reward": 8.045,
+    "std_reward": 8.469384570321507,
+    "min_reward": -7.5,
+    "max_reward": 17.0,
+    "booking_success_rate": 0.76,
+    "preferred_time_match_rate": 0.22,
+    "alternative_accept_rate": 1.0,
+    "mean_attempts": 1.7
+  },
+  "FCFS": {
+    "agent": "FCFS",
+    "n_episodes": 100,
+    "mean_reward": 12.36,
+    "std_reward": 7.939168722227787,
+    "min_reward": -7.0,
+    "max_reward": 17.0,
+    "booking_success_rate": 0.87,
+    "preferred_time_match_rate": 0.63,
+    "alternative_accept_rate": 1.0,
+    "mean_attempts": 0.95
+  },
+  "Greedy": {
+    "agent": "Greedy",
+    "n_episodes": 100,
+    "mean_reward": 11.51,
+    "std_reward": 8.987207575214896,
+    "min_reward": -7.0,
+    "max_reward": 17.0,
+    "booking_success_rate": 0.82,
+    "preferred_time_match_rate": 0.63,
+    "alternative_accept_rate": 1.0,
+    "mean_attempts": 0.95
+  }
+}

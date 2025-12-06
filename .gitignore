@@ -41,8 +41,6 @@ env/
 *.pt
 
 # Project specific
-models/
-results/
 logs/
 *.log
 

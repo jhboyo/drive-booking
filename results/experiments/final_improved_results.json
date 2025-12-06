@@ -1,0 +1,24 @@
+{
+  "experiment": "final_improved_system",
+  "description": "All improvements applied (episodes, hidden_dim, synergy, availability)",
+  "training_config": {
+    "n_episodes": 1000,
+    "phase1_pretrain": 1000,
+    "phase2_pretrain": 1000,
+    "hidden_dim": 256
+  },
+  "results": {
+    "n_episodes": 100,
+    "mean_total_reward": 32.777347041847044,
+    "std_total_reward": 8.094409600959752,
+    "mean_phase1_reward": 9.877347041847042,
+    "mean_phase2_reward": 11.99,
+    "mean_synergy_bonus": 10.91,
+    "end_to_end_success_rate": 0.91,
+    "preferred_time_match_rate": 0.5,
+    "mean_questions": 0.0,
+    "mean_attempts": 1.06,
+    "mean_total_interactions": 2.54
+  },
+  "training_time": 5.694673776626587
+}

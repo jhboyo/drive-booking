@@ -1,0 +1,65 @@
+{
+  "experiment": "hyperparameter_tuning",
+  "baseline": {
+    "n_episodes": 100,
+    "mean_total_reward": 23.864984848484845,
+    "std_total_reward": 11.179456866333744,
+    "mean_phase1_reward": 9.259984848484848,
+    "mean_phase2_reward": 10.505,
+    "mean_synergy_bonus": 4.1,
+    "end_to_end_success_rate": 0.83,
+    "preferred_time_match_rate": 0.46,
+    "mean_questions": 0.0,
+    "mean_attempts": 1.14,
+    "mean_total_interactions": 2.57,
+    "training_time": 1.6368601322174072,
+    "config": "baseline"
+  },
+  "tuned": {
+    "n_episodes": 100,
+    "mean_total_reward": 24.803378787878792,
+    "std_total_reward": 9.11960413153116,
+    "mean_phase1_reward": 8.403378787878788,
+    "mean_phase2_reward": 11.99,
+    "mean_synergy_bonus": 4.41,
+    "end_to_end_success_rate": 0.91,
+    "preferred_time_match_rate": 0.5,
+    "mean_questions": 0.0,
+    "mean_attempts": 1.06,
+    "mean_total_interactions": 2.54,
+    "training_time": 5.066206932067871,
+    "config": "tuned"
+  },
+  "comparison": {
+    "mean_total_reward": {
+      "baseline": 23.864984848484845,
+      "tuned": 24.803378787878792,
+      "improvement": 0.9383939393939471
+    },
+    "end_to_end_success_rate": {
+      "baseline": 0.83,
+      "tuned": 0.91,
+      "improvement": 0.08000000000000007
+    },
+    "preferred_time_match_rate": {
+      "baseline": 0.46,
+      "tuned": 0.5,
+      "improvement": 0.03999999999999998
+    },
+    "mean_synergy_bonus": {
+      "baseline": 4.1,
+      "tuned": 4.41,
+      "improvement": 0.3100000000000005
+    },
+    "mean_questions": {
+      "baseline": 0.0,
+      "tuned": 0.0,
+      "improvement": 0.0
+    },
+    "mean_attempts": {
+      "baseline": 1.14,
+      "tuned": 1.06,
+      "improvement": -0.07999999999999985
+    }
+  }
+}

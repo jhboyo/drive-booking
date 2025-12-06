@@ -1,0 +1,90 @@
+[
+  {
+    "agent": "Random Baseline",
+    "n_episodes": 100,
+    "statistics": {
+      "mean_reward": 6.6991204878787896,
+      "std_reward": 4.278081300102941,
+      "min_reward": -2.057312215500945,
+      "max_reward": 15.0,
+      "median_reward": 6.1734834163945695,
+      "mean_questions": 1.97,
+      "std_questions": 1.6090680532531867,
+      "mean_steps": 3.52,
+      "success_rate": 0.89
+    },
+    "percentiles": {
+      "25th": 4.729419466403162,
+      "50th": 6.1734834163945695,
+      "75th": 8.722323960302457,
+      "90th": 13.259456206679276
+    },
+    "episode_data": null
+  },
+  {
+    "agent": "Rule-based Baseline",
+    "n_episodes": 100,
+    "statistics": {
+      "mean_reward": 7.5130590264650285,
+      "std_reward": 3.383607709977769,
+      "min_reward": 3.303643667296787,
+      "max_reward": 13.440888468809074,
+      "median_reward": 5.423832703213611,
+      "mean_questions": 3.0,
+      "std_questions": 0.0,
+      "mean_steps": 4.0,
+      "success_rate": 1.0
+    },
+    "percentiles": {
+      "25th": 5.138485349716445,
+      "50th": 5.423832703213611,
+      "75th": 8.439952741020793,
+      "90th": 13.435018903591683
+    },
+    "episode_data": null
+  },
+  {
+    "agent": "Adaptive Rule-based",
+    "n_episodes": 100,
+    "statistics": {
+      "mean_reward": 7.450107405935727,
+      "std_reward": 3.172838945054727,
+      "min_reward": 3.6206298979206055,
+      "max_reward": 14.60680529300567,
+      "median_reward": 6.2025803402646495,
+      "mean_questions": 2.46,
+      "std_questions": 0.49839743177508444,
+      "mean_steps": 3.46,
+      "success_rate": 1.0
+    },
+    "percentiles": {
+      "25th": 5.275590595463138,
+      "50th": 6.2025803402646495,
+      "75th": 8.438184073724008,
+      "90th": 14.6
+    },
+    "episode_data": null
+  },
+  {
+    "agent": "Q-Learning",
+    "n_episodes": 100,
+    "statistics": {
+      "mean_reward": 8.25360606060606,
+      "std_reward": 3.3408714268474076,
+      "min_reward": 4.454545454545455,
+      "max_reward": 15.0,
+      "median_reward": 6.533333333333333,
+      "mean_questions": 0.0,
+      "std_questions": 0.0,
+      "mean_steps": 1.0,
+      "success_rate": 1.0
+    },
+    "percentiles": {
+      "25th": 5.605681818181818,
+      "50th": 6.533333333333333,
+      "75th": 11.818181818181818,
+      "90th": 13.337878787878797
+    },
+    "episode_data": null
+  }
+]

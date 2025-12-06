@@ -1,0 +1,65 @@
+{
+  "experiment": "improved_synergy_bonus",
+  "baseline": {
+    "n_episodes": 100,
+    "mean_total_reward": 23.838378787878792,
+    "std_total_reward": 9.567663648856934,
+    "mean_phase1_reward": 8.403378787878788,
+    "mean_phase2_reward": 11.375,
+    "mean_synergy_bonus": 4.06,
+    "end_to_end_success_rate": 0.89,
+    "preferred_time_match_rate": 0.43,
+    "mean_questions": 0.0,
+    "mean_attempts": 1.16,
+    "mean_total_interactions": 2.57,
+    "training_time": 3.412785768508911,
+    "config": "baseline_synergy"
+  },
+  "improved": {
+    "n_episodes": 100,
+    "mean_total_reward": 30.53837878787879,
+    "std_total_reward": 8.528321078907098,
+    "mean_phase1_reward": 8.403378787878788,
+    "mean_phase2_reward": 11.375,
+    "mean_synergy_bonus": 10.76,
+    "end_to_end_success_rate": 0.89,
+    "preferred_time_match_rate": 0.43,
+    "mean_questions": 0.0,
+    "mean_attempts": 1.16,
+    "mean_total_interactions": 2.57,
+    "training_time": 3.0052871704101562,
+    "config": "improved_synergy"
+  },
+  "comparison": {
+    "mean_total_reward": {
+      "baseline": 23.838378787878792,
+      "improved": 30.53837878787879,
+      "improvement": 6.699999999999999
+    },
+    "end_to_end_success_rate": {
+      "baseline": 0.89,
+      "improved": 0.89,
+      "improvement": 0.0
+    },
+    "preferred_time_match_rate": {
+      "baseline": 0.43,
+      "improved": 0.43,
+      "improvement": 0.0
+    },
+    "mean_synergy_bonus": {
+      "baseline": 4.06,
+      "improved": 10.76,
+      "improvement": 6.7
+    },
+    "mean_questions": {
+      "baseline": 0.0,
+      "improved": 0.0,
+      "improvement": 0.0
+    },
+    "mean_attempts": {
+      "baseline": 1.16,
+      "improved": 1.16,
+      "improvement": 0.0
+    }
+  }
+}
