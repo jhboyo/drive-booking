@@ -1,0 +1,527 @@
+{
+  "brand": "Hyundai",
+  "description": "현대자동차 시승 센터 데이터 (24개 센터)",
+  "centers": [
+    {
+      "id": "gangnam",
+      "name": "강남 시승센터",
+      "region": "서울",
+      "district": "강남구",
+      "address": "서울특별시 강남구 테헤란로 152",
+      "coordinates": {"lat": 37.5000, "lng": 127.0364},
+      "operating_hours": {"open": "09:00", "close": "18:00"},
+      "slot_duration_minutes": 60,
+      "staff_count": 5,
+      "vehicles": [
+        {"vehicle_id": "avante", "count": 2},
+        {"vehicle_id": "sonata", "count": 1},
+        {"vehicle_id": "sonata_hybrid", "count": 1},
+        {"vehicle_id": "grandeur", "count": 1},
+        {"vehicle_id": "tucson", "count": 1},
+        {"vehicle_id": "santafe", "count": 1},
+        {"vehicle_id": "ioniq5", "count": 2},
+        {"vehicle_id": "ioniq6", "count": 1}
+      ],
+      "popularity": "high"
+    },
+    {
+      "id": "seocho",
+      "name": "서초 시승센터",
+      "region": "서울",
+      "district": "서초구",
+      "address": "서울특별시 서초구 반포대로 235",
+      "coordinates": {"lat": 37.4923, "lng": 127.0292},
+      "operating_hours": {"open": "09:00", "close": "18:00"},
+      "slot_duration_minutes": 60,
+      "staff_count": 4,
+      "vehicles": [
+        {"vehicle_id": "avante", "count": 1},
+        {"vehicle_id": "sonata", "count": 1},
+        {"vehicle_id": "grandeur", "count": 1},
+        {"vehicle_id": "grandeur_hybrid", "count": 1},
+        {"vehicle_id": "tucson", "count": 1},
+        {"vehicle_id": "santafe_hybrid", "count": 1},
+        {"vehicle_id": "palisade", "count": 1},
+        {"vehicle_id": "ioniq5", "count": 1}
+      ],
+      "popularity": "high"
+    },
+    {
+      "id": "yeongdeungpo",
+      "name": "영등포 시승센터",
+      "region": "서울",
+      "district": "영등포구",
+      "address": "서울특별시 영등포구 국제금융로 10",
+      "coordinates": {"lat": 37.5256, "lng": 126.9260},
+      "operating_hours": {"open": "09:00", "close": "18:00"},
+      "slot_duration_minutes": 60,
+      "staff_count": 4,
+      "vehicles": [
+        {"vehicle_id": "avante", "count": 2},
+        {"vehicle_id": "sonata", "count": 1},
+        {"vehicle_id": "kona", "count": 1},
+        {"vehicle_id": "tucson", "count": 1},
+        {"vehicle_id": "santafe", "count": 1},
+        {"vehicle_id": "ioniq5", "count": 1},
+        {"vehicle_id": "casper", "count": 1}
+      ],
+      "popularity": "medium"
+    },
+    {
+      "id": "songpa",
+      "name": "송파 시승센터",
+      "region": "서울",
+      "district": "송파구",
+      "address": "서울특별시 송파구 올림픽로 300",
+      "coordinates": {"lat": 37.5145, "lng": 127.1050},
+      "operating_hours": {"open": "09:00", "close": "18:00"},
+      "slot_duration_minutes": 60,
+      "staff_count": 4,
+      "vehicles": [
+        {"vehicle_id": "avante", "count": 1},
+        {"vehicle_id": "sonata", "count": 1},
+        {"vehicle_id": "grandeur", "count": 1},
+        {"vehicle_id": "kona", "count": 1},
+        {"vehicle_id": "tucson", "count": 1},
+        {"vehicle_id": "santafe", "count": 1},
+        {"vehicle_id": "ioniq5", "count": 1}
+      ],
+      "popularity": "high"
+    },
+    {
+      "id": "mapo",
+      "name": "마포 시승센터",
+      "region": "서울",
+      "district": "마포구",
+      "address": "서울특별시 마포구 월드컵북로 396",
+      "coordinates": {"lat": 37.5665, "lng": 126.9018},
+      "operating_hours": {"open": "09:00", "close": "18:00"},
+      "slot_duration_minutes": 60,
+      "staff_count": 3,
+      "vehicles": [
+        {"vehicle_id": "avante", "count": 2},
+        {"vehicle_id": "sonata", "count": 1},
+        {"vehicle_id": "kona", "count": 1},
+        {"vehicle_id": "tucson", "count": 1},
+        {"vehicle_id": "ioniq5", "count": 1}
+      ],
+      "popularity": "medium"
+    },
+    {
+      "id": "nowon",
+      "name": "노원 시승센터",
+      "region": "서울",
+      "district": "노원구",
+      "address": "서울특별시 노원구 동일로 1414",
+      "coordinates": {"lat": 37.6543, "lng": 127.0568},
+      "operating_hours": {"open": "09:00", "close": "18:00"},
+      "slot_duration_minutes": 60,
+      "staff_count": 3,
+      "vehicles": [
+        {"vehicle_id": "avante", "count": 2},
+        {"vehicle_id": "sonata", "count": 1},
+        {"vehicle_id": "kona", "count": 1},
+        {"vehicle_id": "tucson", "count": 1},
+        {"vehicle_id": "casper", "count": 1}
+      ],
+      "popularity": "medium"
+    },
+    {
+      "id": "bundang",
+      "name": "분당 시승센터",
+      "region": "경기",
+      "district": "성남시 분당구",
+      "address": "경기도 성남시 분당구 판교역로 235",
+      "coordinates": {"lat": 37.3947, "lng": 127.1112},
+      "operating_hours": {"open": "09:00", "close": "18:00"},
+      "slot_duration_minutes": 60,
+      "staff_count": 5,
+      "vehicles": [
+        {"vehicle_id": "avante", "count": 1},
+        {"vehicle_id": "sonata_hybrid", "count": 1},
+        {"vehicle_id": "grandeur", "count": 1},
+        {"vehicle_id": "tucson_hybrid", "count": 1},
+        {"vehicle_id": "santafe", "count": 1},
+        {"vehicle_id": "palisade", "count": 1},
+        {"vehicle_id": "ioniq5", "count": 2},
+        {"vehicle_id": "ioniq6", "count": 1}
+      ],
+      "popularity": "high"
+    },
+    {
+      "id": "suwon",
+      "name": "수원 시승센터",
+      "region": "경기",
+      "district": "수원시 영통구",
+      "address": "경기도 수원시 영통구 광교로 145",
+      "coordinates": {"lat": 37.2849, "lng": 127.0439},
+      "operating_hours": {"open": "09:00", "close": "18:00"},
+      "slot_duration_minutes": 60,
+      "staff_count": 4,
+      "vehicles": [
+        {"vehicle_id": "avante", "count": 2},
+        {"vehicle_id": "sonata", "count": 1},
+        {"vehicle_id": "kona", "count": 1},
+        {"vehicle_id": "kona_hybrid", "count": 1},
+        {"vehicle_id": "tucson", "count": 1},
+        {"vehicle_id": "santafe", "count": 1},
+        {"vehicle_id": "ioniq5", "count": 1}
+      ],
+      "popularity": "medium"
+    },
+    {
+      "id": "goyang",
+      "name": "고양 시승센터",
+      "region": "경기",
+      "district": "고양시 일산동구",
+      "address": "경기도 고양시 일산동구 중앙로 1036",
+      "coordinates": {"lat": 37.6584, "lng": 126.7724},
+      "operating_hours": {"open": "09:00", "close": "18:00"},
+      "slot_duration_minutes": 60,
+      "staff_count": 4,
+      "vehicles": [
+        {"vehicle_id": "avante", "count": 2},
+        {"vehicle_id": "sonata", "count": 1},
+        {"vehicle_id": "kona", "count": 1},
+        {"vehicle_id": "tucson", "count": 1},
+        {"vehicle_id": "santafe", "count": 1},
+        {"vehicle_id": "palisade", "count": 1}
+      ],
+      "popularity": "medium"
+    },
+    {
+      "id": "yongin",
+      "name": "용인 시승센터",
+      "region": "경기",
+      "district": "용인시 수지구",
+      "address": "경기도 용인시 수지구 포은대로 435",
+      "coordinates": {"lat": 37.3219, "lng": 127.0886},
+      "operating_hours": {"open": "09:00", "close": "18:00"},
+      "slot_duration_minutes": 60,
+      "staff_count": 4,
+      "vehicles": [
+        {"vehicle_id": "avante", "count": 1},
+        {"vehicle_id": "sonata", "count": 1},
+        {"vehicle_id": "grandeur", "count": 1},
+        {"vehicle_id": "tucson", "count": 1},
+        {"vehicle_id": "santafe", "count": 1},
+        {"vehicle_id": "ioniq5", "count": 1}
+      ],
+      "popularity": "medium"
+    },
+    {
+      "id": "hanam",
+      "name": "하남 시승센터",
+      "region": "경기",
+      "district": "하남시",
+      "address": "경기도 하남시 미사대로 750",
+      "coordinates": {"lat": 37.5506, "lng": 127.2061},
+      "operating_hours": {"open": "09:00", "close": "18:00"},
+      "slot_duration_minutes": 60,
+      "staff_count": 3,
+      "vehicles": [
+        {"vehicle_id": "avante", "count": 1},
+        {"vehicle_id": "sonata", "count": 1},
+        {"vehicle_id": "kona", "count": 1},
+        {"vehicle_id": "tucson", "count": 1},
+        {"vehicle_id": "santafe", "count": 1}
+      ],
+      "popularity": "low"
+    },
+    {
+      "id": "incheon_songdo",
+      "name": "송도 시승센터",
+      "region": "인천",
+      "district": "연수구",
+      "address": "인천광역시 연수구 컨벤시아대로 165",
+      "coordinates": {"lat": 37.3892, "lng": 126.6401},
+      "operating_hours": {"open": "09:00", "close": "18:00"},
+      "slot_duration_minutes": 60,
+      "staff_count": 4,
+      "vehicles": [
+        {"vehicle_id": "avante", "count": 2},
+        {"vehicle_id": "sonata", "count": 1},
+        {"vehicle_id": "kona", "count": 1},
+        {"vehicle_id": "tucson", "count": 1},
+        {"vehicle_id": "santafe", "count": 1},
+        {"vehicle_id": "palisade", "count": 1},
+        {"vehicle_id": "ioniq5", "count": 1}
+      ],
+      "popularity": "medium"
+    },
+    {
+      "id": "incheon_bupyeong",
+      "name": "부평 시승센터",
+      "region": "인천",
+      "district": "부평구",
+      "address": "인천광역시 부평구 부평대로 283",
+      "coordinates": {"lat": 37.5074, "lng": 126.7219},
+      "operating_hours": {"open": "09:00", "close": "18:00"},
+      "slot_duration_minutes": 60,
+      "staff_count": 3,
+      "vehicles": [
+        {"vehicle_id": "avante", "count": 2},
+        {"vehicle_id": "sonata", "count": 1},
+        {"vehicle_id": "kona", "count": 1},
+        {"vehicle_id": "tucson", "count": 1},
+        {"vehicle_id": "casper", "count": 1}
+      ],
+      "popularity": "low"
+    },
+    {
+      "id": "busan_haeundae",
+      "name": "해운대 시승센터",
+      "region": "부산",
+      "district": "해운대구",
+      "address": "부산광역시 해운대구 센텀중앙로 97",
+      "coordinates": {"lat": 35.1690, "lng": 129.1318},
+      "operating_hours": {"open": "09:00", "close": "18:00"},
+      "slot_duration_minutes": 60,
+      "staff_count": 4,
+      "vehicles": [
+        {"vehicle_id": "avante", "count": 1},
+        {"vehicle_id": "sonata", "count": 1},
+        {"vehicle_id": "grandeur", "count": 1},
+        {"vehicle_id": "tucson", "count": 1},
+        {"vehicle_id": "santafe", "count": 1},
+        {"vehicle_id": "palisade", "count": 1},
+        {"vehicle_id": "ioniq5", "count": 1},
+        {"vehicle_id": "ioniq6", "count": 1}
+      ],
+      "popularity": "high"
+    },
+    {
+      "id": "busan_sasang",
+      "name": "사상 시승센터",
+      "region": "부산",
+      "district": "사상구",
+      "address": "부산광역시 사상구 사상로 200",
+      "coordinates": {"lat": 35.1525, "lng": 128.9912},
+      "operating_hours": {"open": "09:00", "close": "18:00"},
+      "slot_duration_minutes": 60,
+      "staff_count": 3,
+      "vehicles": [
+        {"vehicle_id": "avante", "count": 2},
+        {"vehicle_id": "sonata", "count": 1},
+        {"vehicle_id": "kona", "count": 1},
+        {"vehicle_id": "tucson", "count": 1},
+        {"vehicle_id": "santafe", "count": 1}
+      ],
+      "popularity": "medium"
+    },
+    {
+      "id": "daegu_suseong",
+      "name": "수성 시승센터",
+      "region": "대구",
+      "district": "수성구",
+      "address": "대구광역시 수성구 달구벌대로 2400",
+      "coordinates": {"lat": 35.8564, "lng": 128.6307},
+      "operating_hours": {"open": "09:00", "close": "18:00"},
+      "slot_duration_minutes": 60,
+      "staff_count": 4,
+      "vehicles": [
+        {"vehicle_id": "avante", "count": 2},
+        {"vehicle_id": "sonata", "count": 1},
+        {"vehicle_id": "grandeur", "count": 1},
+        {"vehicle_id": "tucson", "count": 1},
+        {"vehicle_id": "santafe", "count": 1},
+        {"vehicle_id": "ioniq5", "count": 1}
+      ],
+      "popularity": "medium"
+    },
+    {
+      "id": "daegu_dalseong",
+      "name": "달서 시승센터",
+      "region": "대구",
+      "district": "달서구",
+      "address": "대구광역시 달서구 달구벌대로 1801",
+      "coordinates": {"lat": 35.8299, "lng": 128.5350},
+      "operating_hours": {"open": "09:00", "close": "18:00"},
+      "slot_duration_minutes": 60,
+      "staff_count": 3,
+      "vehicles": [
+        {"vehicle_id": "avante", "count": 2},
+        {"vehicle_id": "sonata", "count": 1},
+        {"vehicle_id": "kona", "count": 1},
+        {"vehicle_id": "tucson", "count": 1}
+      ],
+      "popularity": "low"
+    },
+    {
+      "id": "daejeon_dunsan",
+      "name": "둔산 시승센터",
+      "region": "대전",
+      "district": "서구",
+      "address": "대전광역시 서구 둔산로 100",
+      "coordinates": {"lat": 36.3504, "lng": 127.3845},
+      "operating_hours": {"open": "09:00", "close": "18:00"},
+      "slot_duration_minutes": 60,
+      "staff_count": 3,
+      "vehicles": [
+        {"vehicle_id": "avante", "count": 1},
+        {"vehicle_id": "sonata", "count": 1},
+        {"vehicle_id": "kona", "count": 1},
+        {"vehicle_id": "tucson", "count": 1},
+        {"vehicle_id": "santafe", "count": 1},
+        {"vehicle_id": "ioniq5", "count": 1}
+      ],
+      "popularity": "medium"
+    },
+    {
+      "id": "gwangju_sangmu",
+      "name": "상무 시승센터",
+      "region": "광주",
+      "district": "서구",
+      "address": "광주광역시 서구 상무중앙로 110",
+      "coordinates": {"lat": 35.1466, "lng": 126.8492},
+      "operating_hours": {"open": "09:00", "close": "18:00"},
+      "slot_duration_minutes": 60,
+      "staff_count": 3,
+      "vehicles": [
+        {"vehicle_id": "avante", "count": 1},
+        {"vehicle_id": "sonata", "count": 1},
+        {"vehicle_id": "tucson", "count": 1},
+        {"vehicle_id": "santafe", "count": 1},
+        {"vehicle_id": "ioniq5", "count": 1}
+      ],
+      "popularity": "low"
+    },
+    {
+      "id": "ulsan_namgu",
+      "name": "울산 시승센터",
+      "region": "울산",
+      "district": "남구",
+      "address": "울산광역시 남구 삼산로 288",
+      "coordinates": {"lat": 35.5383, "lng": 129.3113},
+      "operating_hours": {"open": "09:00", "close": "18:00"},
+      "slot_duration_minutes": 60,
+      "staff_count": 4,
+      "vehicles": [
+        {"vehicle_id": "avante", "count": 2},
+        {"vehicle_id": "sonata", "count": 1},
+        {"vehicle_id": "grandeur", "count": 1},
+        {"vehicle_id": "tucson", "count": 1},
+        {"vehicle_id": "santafe", "count": 1},
+        {"vehicle_id": "ioniq5", "count": 1},
+        {"vehicle_id": "ioniq6", "count": 1}
+      ],
+      "popularity": "medium"
+    },
+    {
+      "id": "sejong",
+      "name": "세종 시승센터",
+      "region": "세종",
+      "district": "세종시",
+      "address": "세종특별자치시 한누리대로 2130",
+      "coordinates": {"lat": 36.4800, "lng": 127.2890},
+      "operating_hours": {"open": "09:00", "close": "18:00"},
+      "slot_duration_minutes": 60,
+      "staff_count": 3,
+      "vehicles": [
+        {"vehicle_id": "avante", "count": 1},
+        {"vehicle_id": "sonata", "count": 1},
+        {"vehicle_id": "kona", "count": 1},
+        {"vehicle_id": "tucson", "count": 1},
+        {"vehicle_id": "ioniq5", "count": 1}
+      ],
+      "popularity": "low"
+    },
+    {
+      "id": "cheongju",
+      "name": "청주 시승센터",
+      "region": "충북",
+      "district": "흥덕구",
+      "address": "충청북도 청주시 흥덕구 가경로 100",
+      "coordinates": {"lat": 36.6357, "lng": 127.4317},
+      "operating_hours": {"open": "09:00", "close": "18:00"},
+      "slot_duration_minutes": 60,
+      "staff_count": 3,
+      "vehicles": [
+        {"vehicle_id": "avante", "count": 2},
+        {"vehicle_id": "sonata", "count": 1},
+        {"vehicle_id": "kona", "count": 1},
+        {"vehicle_id": "tucson", "count": 1},
+        {"vehicle_id": "santafe", "count": 1}
+      ],
+      "popularity": "low"
+    },
+    {
+      "id": "jeonju",
+      "name": "전주 시승센터",
+      "region": "전북",
+      "district": "덕진구",
+      "address": "전라북도 전주시 덕진구 기린대로 560",
+      "coordinates": {"lat": 35.8468, "lng": 127.1297},
+      "operating_hours": {"open": "09:00", "close": "18:00"},
+      "slot_duration_minutes": 60,
+      "staff_count": 3,
+      "vehicles": [
+        {"vehicle_id": "avante", "count": 1},
+        {"vehicle_id": "sonata", "count": 1},
+        {"vehicle_id": "tucson", "count": 1},
+        {"vehicle_id": "santafe", "count": 1},
+        {"vehicle_id": "ioniq5", "count": 1}
+      ],
+      "popularity": "low"
+    },
+    {
+      "id": "changwon",
+      "name": "창원 시승센터",
+      "region": "경남",
+      "district": "성산구",
+      "address": "경상남도 창원시 성산구 중앙대로 151",
+      "coordinates": {"lat": 35.2270, "lng": 128.6811},
+      "operating_hours": {"open": "09:00", "close": "18:00"},
+      "slot_duration_minutes": 60,
+      "staff_count": 3,
+      "vehicles": [
+        {"vehicle_id": "avante", "count": 2},
+        {"vehicle_id": "sonata", "count": 1},
+        {"vehicle_id": "kona", "count": 1},
+        {"vehicle_id": "tucson", "count": 1},
+        {"vehicle_id": "santafe", "count": 1}
+      ],
+      "popularity": "medium"
+    }
+  ],
+  "time_slots": [
+    {"slot_id": 0, "time": "09:00", "label": "오전 9시"},
+    {"slot_id": 1, "time": "10:00", "label": "오전 10시"},
+    {"slot_id": 2, "time": "11:00", "label": "오전 11시"},
+    {"slot_id": 3, "time": "12:00", "label": "오후 12시"},
+    {"slot_id": 4, "time": "13:00", "label": "오후 1시"},
+    {"slot_id": 5, "time": "14:00", "label": "오후 2시"},
+    {"slot_id": 6, "time": "15:00", "label": "오후 3시"},
+    {"slot_id": 7, "time": "16:00", "label": "오후 4시"},
+    {"slot_id": 8, "time": "17:00", "label": "오후 5시"}
+  ],
+  "customer_flexibility_types": [
+    {"type": "high", "description": "시간/날짜 유연함", "alt_accept_prob": 0.8},
+    {"type": "medium", "description": "어느 정도 유연함", "alt_accept_prob": 0.5},
+    {"type": "low", "description": "특정 시간만 가능", "alt_accept_prob": 0.2}
+  ],
+  "peak_times": {
+    "weekday": [10, 11, 14, 15],
+    "weekend": [10, 11, 12, 14, 15, 16]
+  },
+  "regions": [
+    {"id": "seoul", "name": "서울", "center_count": 6},
+    {"id": "gyeonggi", "name": "경기", "center_count": 5},
+    {"id": "incheon", "name": "인천", "center_count": 2},
+    {"id": "busan", "name": "부산", "center_count": 2},
+    {"id": "daegu", "name": "대구", "center_count": 2},
+    {"id": "daejeon", "name": "대전", "center_count": 1},
+    {"id": "gwangju", "name": "광주", "center_count": 1},
+    {"id": "ulsan", "name": "울산", "center_count": 1},
+    {"id": "sejong", "name": "세종", "center_count": 1},
+    {"id": "chungbuk", "name": "충북", "center_count": 1},
+    {"id": "jeonbuk", "name": "전북", "center_count": 1},
+    {"id": "gyeongnam", "name": "경남", "center_count": 1}
+  ],
+  "simulation_config": {
+    "days_ahead": 14,
+    "base_demand_weekday": 0.5,
+    "base_demand_weekend": 0.8,
+    "popular_vehicle_boost": 1.3
+  }
+}
