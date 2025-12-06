@@ -1,0 +1,1460 @@
+{
+  "total_count": 100,
+  "type_distribution": {
+    "new": 46,
+    "interested": 31,
+    "experienced": 23
+  },
+  "profiles": [
+    {
+      "age": 68,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "서울",
+      "has_workplace": false,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 41,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "울산",
+      "has_workplace": true,
+      "interested_cars": [
+        "싼타페 하이브리드",
+        "넥쏘",
+        "아이오닉 9"
+      ],
+      "quote_history": [],
+      "test_drive_history": [
+        "넥쏘"
+      ],
+      "purchase_history": [
+        "아이오닉 6"
+      ],
+      "customer_type": "experienced"
+    },
+    {
+      "age": 38,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "대구",
+      "has_workplace": false,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 50,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "광주",
+      "has_workplace": false,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 32,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "서울",
+      "has_workplace": true,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 54,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "경기",
+      "has_workplace": false,
+      "interested_cars": [
+        "아이오닉 9",
+        "아이오닉 6",
+        "팰리세이드"
+      ],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "interested"
+    },
+    {
+      "age": 57,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "부산",
+      "has_workplace": false,
+      "interested_cars": [
+        "아이오닉 6",
+        "아이오닉 5"
+      ],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "interested"
+    },
+    {
+      "age": 45,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "경기",
+      "has_workplace": false,
+      "interested_cars": [
+        "쏘나타",
+        "코나"
+      ],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "interested"
+    },
+    {
+      "age": 44,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "서울",
+      "has_workplace": true,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 30,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "세종",
+      "has_workplace": true,
+      "interested_cars": [
+        "아이오닉 9"
+      ],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "interested"
+    },
+    {
+      "age": 45,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "서울",
+      "has_workplace": true,
+      "interested_cars": [
+        "스타리아",
+        "싼타페",
+        "쏘나타"
+      ],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "interested"
+    },
+    {
+      "age": 43,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "대구",
+      "has_workplace": true,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 29,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "부산",
+      "has_workplace": false,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 45,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "대전",
+      "has_workplace": false,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 48,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "제주",
+      "has_workplace": true,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 26,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "경기",
+      "has_workplace": false,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 20,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "경기",
+      "has_workplace": true,
+      "interested_cars": [
+        "투싼 하이브리드",
+        "아이오닉 5",
+        "코나"
+      ],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "interested"
+    },
+    {
+      "age": 55,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "인천",
+      "has_workplace": true,
+      "interested_cars": [
+        "그랜저 하이브리드"
+      ],
+      "quote_history": [
+        "그랜저 하이브리드"
+      ],
+      "test_drive_history": [
+        "그랜저 하이브리드"
+      ],
+      "purchase_history": [],
+      "customer_type": "experienced"
+    },
+    {
+      "age": 20,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "경기",
+      "has_workplace": false,
+      "interested_cars": [
+        "쏘나타 하이브리드",
+        "코나"
+      ],
+      "quote_history": [],
+      "test_drive_history": [
+        "코나",
+        "쏘나타 하이브리드"
+      ],
+      "purchase_history": [],
+      "customer_type": "experienced"
+    },
+    {
+      "age": 56,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "전남",
+      "has_workplace": true,
+      "interested_cars": [
+        "그랜저",
+        "아이오닉 5 N",
+        "쏘나타 하이브리드"
+      ],
+      "quote_history": [
+        "그랜저",
+        "쏘나타 하이브리드"
+      ],
+      "test_drive_history": [
+        "그랜저",
+        "아이오닉 5 N"
+      ],
+      "purchase_history": [
+        "코나"
+      ],
+      "customer_type": "experienced"
+    },
+    {
+      "age": 37,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "서울",
+      "has_workplace": true,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 20,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "충남",
+      "has_workplace": true,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 48,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "서울",
+      "has_workplace": true,
+      "interested_cars": [
+        "아반떼 하이브리드",
+        "투싼",
+        "그랜저"
+      ],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "interested"
+    },
+    {
+      "age": 20,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "광주",
+      "has_workplace": false,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 45,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "서울",
+      "has_workplace": true,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 51,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "경기",
+      "has_workplace": false,
+      "interested_cars": [
+        "그랜저",
+        "투싼 하이브리드"
+      ],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "interested"
+    },
+    {
+      "age": 20,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "강원",
+      "has_workplace": true,
+      "interested_cars": [
+        "투싼 하이브리드"
+      ],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "experienced"
+    },
+    {
+      "age": 27,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "인천",
+      "has_workplace": true,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 43,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "충남",
+      "has_workplace": false,
+      "interested_cars": [
+        "아반떼 하이브리드",
+        "넥쏘"
+      ],
+      "quote_history": [
+        "아반떼 하이브리드",
+        "넥쏘"
+      ],
+      "test_drive_history": [
+        "넥쏘",
+        "아반떼 하이브리드"
+      ],
+      "purchase_history": [
+        "아이오닉 5 N",
+        "쏘나타"
+      ],
+      "customer_type": "experienced"
+    },
+    {
+      "age": 48,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "인천",
+      "has_workplace": false,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 62,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "서울",
+      "has_workplace": false,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 48,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "전남",
+      "has_workplace": true,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 38,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "서울",
+      "has_workplace": false,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 55,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "제주",
+      "has_workplace": true,
+      "interested_cars": [
+        "그랜저 하이브리드",
+        "팰리세이드"
+      ],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "interested"
+    },
+    {
+      "age": 54,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "광주",
+      "has_workplace": false,
+      "interested_cars": [
+        "그랜저",
+        "그랜저 하이브리드"
+      ],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "interested"
+    },
+    {
+      "age": 48,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "경기",
+      "has_workplace": true,
+      "interested_cars": [
+        "코나 하이브리드",
+        "쏘나타 하이브리드"
+      ],
+      "quote_history": [],
+      "test_drive_history": [
+        "코나 하이브리드"
+      ],
+      "purchase_history": [],
+      "customer_type": "experienced"
+    },
+    {
+      "age": 45,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "부산",
+      "has_workplace": false,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 47,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "부산",
+      "has_workplace": true,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 56,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "서울",
+      "has_workplace": true,
+      "interested_cars": [
+        "아이오닉 5 N"
+      ],
+      "quote_history": [
+        "아이오닉 5 N"
+      ],
+      "test_drive_history": [],
+      "purchase_history": [
+        "투싼 하이브리드"
+      ],
+      "customer_type": "experienced"
+    },
+    {
+      "age": 26,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "광주",
+      "has_workplace": false,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 32,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "충북",
+      "has_workplace": true,
+      "interested_cars": [
+        "아반떼 N"
+      ],
+      "quote_history": [
+        "아반떼 N"
+      ],
+      "test_drive_history": [],
+      "purchase_history": [
+        "팰리세이드"
+      ],
+      "customer_type": "experienced"
+    },
+    {
+      "age": 65,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "경남",
+      "has_workplace": true,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 20,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "서울",
+      "has_workplace": false,
+      "interested_cars": [
+        "캐스퍼",
+        "베뉴",
+        "아이오닉 6"
+      ],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "interested"
+    },
+    {
+      "age": 21,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "경기",
+      "has_workplace": true,
+      "interested_cars": [
+        "스타리아",
+        "아반떼",
+        "아반떼 하이브리드"
+      ],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "interested"
+    },
+    {
+      "age": 40,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "경기",
+      "has_workplace": true,
+      "interested_cars": [
+        "코나"
+      ],
+      "quote_history": [
+        "코나"
+      ],
+      "test_drive_history": [
+        "코나"
+      ],
+      "purchase_history": [
+        "아이오닉 9",
+        "스타리아"
+      ],
+      "customer_type": "experienced"
+    },
+    {
+      "age": 52,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "울산",
+      "has_workplace": false,
+      "interested_cars": [
+        "투싼 하이브리드",
+        "투싼"
+      ],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "interested"
+    },
+    {
+      "age": 21,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "인천",
+      "has_workplace": true,
+      "interested_cars": [
+        "아반떼 N"
+      ],
+      "quote_history": [
+        "아반떼 N"
+      ],
+      "test_drive_history": [
+        "아반떼 N"
+      ],
+      "purchase_history": [],
+      "customer_type": "experienced"
+    },
+    {
+      "age": 49,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "경기",
+      "has_workplace": true,
+      "interested_cars": [
+        "아반떼 N",
+        "스타리아"
+      ],
+      "quote_history": [
+        "스타리아",
+        "아반떼 N"
+      ],
+      "test_drive_history": [],
+      "purchase_history": [
+        "코나 하이브리드",
+        "싼타페 하이브리드"
+      ],
+      "customer_type": "experienced"
+    },
+    {
+      "age": 31,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "세종",
+      "has_workplace": true,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 26,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "서울",
+      "has_workplace": true,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 43,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "광주",
+      "has_workplace": true,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 30,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "제주",
+      "has_workplace": true,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 42,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "인천",
+      "has_workplace": true,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 31,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "전북",
+      "has_workplace": false,
+      "interested_cars": [
+        "아반떼 하이브리드"
+      ],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "interested"
+    },
+    {
+      "age": 42,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "서울",
+      "has_workplace": true,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 38,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "서울",
+      "has_workplace": false,
+      "interested_cars": [
+        "아반떼 N",
+        "캐스퍼",
+        "코나 일렉트릭"
+      ],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "interested"
+    },
+    {
+      "age": 20,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "서울",
+      "has_workplace": false,
+      "interested_cars": [
+        "아반떼",
+        "캐스퍼",
+        "쏘나타"
+      ],
+      "quote_history": [],
+      "test_drive_history": [
+        "아반떼",
+        "캐스퍼"
+      ],
+      "purchase_history": [],
+      "customer_type": "experienced"
+    },
+    {
+      "age": 50,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "충남",
+      "has_workplace": false,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 46,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "경기",
+      "has_workplace": true,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 34,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "부산",
+      "has_workplace": true,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 31,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "전북",
+      "has_workplace": true,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 49,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "서울",
+      "has_workplace": true,
+      "interested_cars": [
+        "스타리아"
+      ],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "interested"
+    },
+    {
+      "age": 41,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "인천",
+      "has_workplace": true,
+      "interested_cars": [
+        "그랜저 하이브리드",
+        "싼타페 하이브리드",
+        "싼타페"
+      ],
+      "quote_history": [
+        "싼타페"
+      ],
+      "test_drive_history": [
+        "싼타페 하이브리드"
+      ],
+      "purchase_history": [],
+      "customer_type": "experienced"
+    },
+    {
+      "age": 32,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "울산",
+      "has_workplace": false,
+      "interested_cars": [
+        "캐스퍼"
+      ],
+      "quote_history": [],
+      "test_drive_history": [
+        "캐스퍼"
+      ],
+      "purchase_history": [
+        "투싼 하이브리드"
+      ],
+      "customer_type": "experienced"
+    },
+    {
+      "age": 32,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "경기",
+      "has_workplace": true,
+      "interested_cars": [
+        "넥쏘",
+        "아이오닉 5",
+        "아이오닉 6"
+      ],
+      "quote_history": [
+        "넥쏘"
+      ],
+      "test_drive_history": [
+        "넥쏘",
+        "아이오닉 5"
+      ],
+      "purchase_history": [
+        "베뉴"
+      ],
+      "customer_type": "experienced"
+    },
+    {
+      "age": 35,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "경기",
+      "has_workplace": true,
+      "interested_cars": [
+        "넥쏘"
+      ],
+      "quote_history": [
+        "넥쏘"
+      ],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "experienced"
+    },
+    {
+      "age": 35,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "충북",
+      "has_workplace": true,
+      "interested_cars": [
+        "아반떼",
+        "아이오닉 6"
+      ],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "interested"
+    },
+    {
+      "age": 53,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "서울",
+      "has_workplace": true,
+      "interested_cars": [
+        "쏘나타"
+      ],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "interested"
+    },
+    {
+      "age": 20,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "경기",
+      "has_workplace": true,
+      "interested_cars": [
+        "코나 일렉트릭",
+        "아반떼 하이브리드"
+      ],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "interested"
+    },
+    {
+      "age": 51,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "경기",
+      "has_workplace": false,
+      "interested_cars": [
+        "스타리아"
+      ],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [
+        "코나 일렉트릭"
+      ],
+      "customer_type": "experienced"
+    },
+    {
+      "age": 41,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "경기",
+      "has_workplace": true,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 43,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "경기",
+      "has_workplace": false,
+      "interested_cars": [
+        "아이오닉 9"
+      ],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "interested"
+    },
+    {
+      "age": 42,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "전북",
+      "has_workplace": true,
+      "interested_cars": [
+        "코나",
+        "싼타페 하이브리드"
+      ],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "interested"
+    },
+    {
+      "age": 30,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "부산",
+      "has_workplace": true,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 57,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "서울",
+      "has_workplace": true,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 49,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "서울",
+      "has_workplace": true,
+      "interested_cars": [
+        "그랜저 하이브리드"
+      ],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "interested"
+    },
+    {
+      "age": 49,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "제주",
+      "has_workplace": true,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 47,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "서울",
+      "has_workplace": true,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 42,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "서울",
+      "has_workplace": true,
+      "interested_cars": [
+        "아반떼 하이브리드",
+        "아이오닉 5",
+        "아이오닉 6"
+      ],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "experienced"
+    },
+    {
+      "age": 53,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "세종",
+      "has_workplace": false,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 46,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "경북",
+      "has_workplace": true,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 40,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "인천",
+      "has_workplace": true,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 39,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "세종",
+      "has_workplace": true,
+      "interested_cars": [
+        "그랜저 하이브리드"
+      ],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "interested"
+    },
+    {
+      "age": 29,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "부산",
+      "has_workplace": true,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 35,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "인천",
+      "has_workplace": true,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 46,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "서울",
+      "has_workplace": true,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 49,
+      "gender": "female",
+      "is_foreigner": true,
+      "region": "서울",
+      "has_workplace": true,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 27,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "서울",
+      "has_workplace": true,
+      "interested_cars": [
+        "스타리아",
+        "아이오닉 6",
+        "넥쏘"
+      ],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "interested"
+    },
+    {
+      "age": 38,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "서울",
+      "has_workplace": true,
+      "interested_cars": [
+        "그랜저 하이브리드"
+      ],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "interested"
+    },
+    {
+      "age": 45,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "서울",
+      "has_workplace": false,
+      "interested_cars": [
+        "아이오닉 9",
+        "팰리세이드",
+        "쏘나타"
+      ],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "experienced"
+    },
+    {
+      "age": 52,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "경기",
+      "has_workplace": true,
+      "interested_cars": [
+        "팰리세이드",
+        "쏘나타"
+      ],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [
+        "코나"
+      ],
+      "customer_type": "experienced"
+    },
+    {
+      "age": 42,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "경기",
+      "has_workplace": true,
+      "interested_cars": [
+        "투싼 하이브리드",
+        "스타리아",
+        "아이오닉 9"
+      ],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "interested"
+    },
+    {
+      "age": 38,
+      "gender": "female",
+      "is_foreigner": true,
+      "region": "서울",
+      "has_workplace": true,
+      "interested_cars": [
+        "투싼 하이브리드",
+        "캐스퍼"
+      ],
+      "quote_history": [],
+      "test_drive_history": [
+        "캐스퍼"
+      ],
+      "purchase_history": [
+        "싼타페 하이브리드"
+      ],
+      "customer_type": "experienced"
+    },
+    {
+      "age": 40,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "인천",
+      "has_workplace": true,
+      "interested_cars": [
+        "아이오닉 6",
+        "그랜저"
+      ],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "interested"
+    },
+    {
+      "age": 35,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "경기",
+      "has_workplace": false,
+      "interested_cars": [
+        "싼타페",
+        "아반떼"
+      ],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "interested"
+    },
+    {
+      "age": 46,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "광주",
+      "has_workplace": true,
+      "interested_cars": [
+        "싼타페 하이브리드",
+        "아반떼 N"
+      ],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "interested"
+    },
+    {
+      "age": 31,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "서울",
+      "has_workplace": false,
+      "interested_cars": [],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "new"
+    },
+    {
+      "age": 21,
+      "gender": "female",
+      "is_foreigner": false,
+      "region": "광주",
+      "has_workplace": true,
+      "interested_cars": [
+        "투싼"
+      ],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "interested"
+    },
+    {
+      "age": 47,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "울산",
+      "has_workplace": false,
+      "interested_cars": [
+        "그랜저 하이브리드",
+        "캐스퍼"
+      ],
+      "quote_history": [
+        "그랜저 하이브리드",
+        "캐스퍼"
+      ],
+      "test_drive_history": [
+        "캐스퍼",
+        "그랜저 하이브리드"
+      ],
+      "purchase_history": [
+        "아반떼 N"
+      ],
+      "customer_type": "experienced"
+    },
+    {
+      "age": 20,
+      "gender": "male",
+      "is_foreigner": false,
+      "region": "인천",
+      "has_workplace": true,
+      "interested_cars": [
+        "그랜저 하이브리드"
+      ],
+      "quote_history": [],
+      "test_drive_history": [],
+      "purchase_history": [],
+      "customer_type": "interested"
+    }
+  ]
+}

@@ -392,55 +392,5 @@
       },
       "target_customers": ["eco_friendly", "family_large", "luxury", "tech_lover"]
     }
-  ],
-  "questions": [
-    {
-      "id": 0,
-      "text": "주로 어떤 용도로 차량을 사용하실 예정인가요?",
-      "attribute": "usage",
-      "options": ["출퇴근", "가족여행", "업무용", "레저/아웃도어"]
-    },
-    {
-      "id": 1,
-      "text": "선호하시는 연료 타입이 있으신가요?",
-      "attribute": "fuel_type",
-      "options": ["가솔린", "하이브리드", "전기차", "상관없음"]
-    },
-    {
-      "id": 2,
-      "text": "가족 구성원은 몇 명인가요?",
-      "attribute": "family_size",
-      "options": ["1명", "2명", "3-4명", "5명 이상"]
-    },
-    {
-      "id": 3,
-      "text": "예산은 어느 정도 생각하고 계신가요?",
-      "attribute": "budget",
-      "options": ["3000만원 이하", "3000-4500만원", "4500-6000만원", "6000만원 이상"]
-    },
-    {
-      "id": 4,
-      "text": "차량 선택 시 가장 중요하게 생각하시는 것은?",
-      "attribute": "priority",
-      "options": ["안전성", "연비", "성능", "디자인"]
-    },
-    {
-      "id": 5,
-      "text": "선호하시는 차량 크기가 있으신가요?",
-      "attribute": "size",
-      "options": ["소형", "중형", "대형", "상관없음"]
-    },
-    {
-      "id": 6,
-      "text": "선호하시는 차체 타입이 있으신가요?",
-      "attribute": "body_type",
-      "options": ["세단", "SUV", "MPV", "상관없음"]
-    },
-    {
-      "id": 7,
-      "text": "선호하시는 외장 컬러가 있으신가요?",
-      "attribute": "color",
-      "options": ["화이트", "블랙", "그레이", "기타", "상관없음"]
-    }
   ]
 }
