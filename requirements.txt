@@ -1,0 +1,16 @@
+# RL Environment
+gymnasium>=0.29.0
+
+# Deep Learning
+torch>=2.0.0
+numpy>=1.24.0
+
+# Data Processing
+pandas>=2.0.0
+
+# Visualization
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Utilities
+tqdm>=4.65.0

@@ -1,0 +1,373 @@
+{
+  "brand": "Hyundai",
+  "vehicles": [
+    {
+      "id": "avante",
+      "name": "아반떼",
+      "category": "sedan",
+      "fuel_type": "gasoline",
+      "size": "compact",
+      "seats": 5,
+      "price_range": {"min": 2000, "max": 2800},
+      "features": {
+        "safety": 0.7,
+        "fuel_efficiency": 0.8,
+        "performance": 0.6,
+        "design": 0.8
+      },
+      "target_customers": ["young_single", "commuter", "first_car"]
+    },
+    {
+      "id": "sonata",
+      "name": "쏘나타",
+      "category": "sedan",
+      "fuel_type": "gasoline",
+      "size": "mid",
+      "seats": 5,
+      "price_range": {"min": 2800, "max": 3800},
+      "features": {
+        "safety": 0.8,
+        "fuel_efficiency": 0.7,
+        "performance": 0.7,
+        "design": 0.8
+      },
+      "target_customers": ["commuter", "business", "family_small"]
+    },
+    {
+      "id": "sonata_hybrid",
+      "name": "쏘나타 하이브리드",
+      "category": "sedan",
+      "fuel_type": "hybrid",
+      "size": "mid",
+      "seats": 5,
+      "price_range": {"min": 3300, "max": 4200},
+      "features": {
+        "safety": 0.8,
+        "fuel_efficiency": 0.95,
+        "performance": 0.65,
+        "design": 0.8
+      },
+      "target_customers": ["commuter", "eco_friendly", "long_distance"]
+    },
+    {
+      "id": "grandeur",
+      "name": "그랜저",
+      "category": "sedan",
+      "fuel_type": "gasoline",
+      "size": "full",
+      "seats": 5,
+      "price_range": {"min": 4000, "max": 5500},
+      "features": {
+        "safety": 0.9,
+        "fuel_efficiency": 0.6,
+        "performance": 0.8,
+        "design": 0.9
+      },
+      "target_customers": ["business", "luxury", "senior"]
+    },
+    {
+      "id": "casper",
+      "name": "캐스퍼",
+      "category": "suv",
+      "fuel_type": "gasoline",
+      "size": "mini",
+      "seats": 4,
+      "price_range": {"min": 1400, "max": 2000},
+      "features": {
+        "safety": 0.65,
+        "fuel_efficiency": 0.85,
+        "performance": 0.5,
+        "design": 0.85
+      },
+      "target_customers": ["young_single", "city_driver", "first_car"]
+    },
+    {
+      "id": "kona",
+      "name": "코나",
+      "category": "suv",
+      "fuel_type": "gasoline",
+      "size": "compact",
+      "seats": 5,
+      "price_range": {"min": 2400, "max": 3200},
+      "features": {
+        "safety": 0.75,
+        "fuel_efficiency": 0.75,
+        "performance": 0.7,
+        "design": 0.8
+      },
+      "target_customers": ["young_single", "commuter", "outdoor"]
+    },
+    {
+      "id": "kona_hybrid",
+      "name": "코나 하이브리드",
+      "category": "suv",
+      "fuel_type": "hybrid",
+      "size": "compact",
+      "seats": 5,
+      "price_range": {"min": 2900, "max": 3500},
+      "features": {
+        "safety": 0.75,
+        "fuel_efficiency": 0.9,
+        "performance": 0.65,
+        "design": 0.8
+      },
+      "target_customers": ["commuter", "eco_friendly", "city_driver"]
+    },
+    {
+      "id": "tucson",
+      "name": "투싼",
+      "category": "suv",
+      "fuel_type": "gasoline",
+      "size": "mid",
+      "seats": 5,
+      "price_range": {"min": 3000, "max": 4000},
+      "features": {
+        "safety": 0.8,
+        "fuel_efficiency": 0.7,
+        "performance": 0.75,
+        "design": 0.85
+      },
+      "target_customers": ["family_small", "outdoor", "commuter"]
+    },
+    {
+      "id": "tucson_hybrid",
+      "name": "투싼 하이브리드",
+      "category": "suv",
+      "fuel_type": "hybrid",
+      "size": "mid",
+      "seats": 5,
+      "price_range": {"min": 3500, "max": 4300},
+      "features": {
+        "safety": 0.8,
+        "fuel_efficiency": 0.9,
+        "performance": 0.7,
+        "design": 0.85
+      },
+      "target_customers": ["family_small", "eco_friendly", "long_distance"]
+    },
+    {
+      "id": "santafe",
+      "name": "싼타페",
+      "category": "suv",
+      "fuel_type": "gasoline",
+      "size": "mid",
+      "seats": 7,
+      "price_range": {"min": 3600, "max": 4800},
+      "features": {
+        "safety": 0.85,
+        "fuel_efficiency": 0.65,
+        "performance": 0.8,
+        "design": 0.85
+      },
+      "target_customers": ["family_large", "outdoor", "long_distance"]
+    },
+    {
+      "id": "santafe_hybrid",
+      "name": "싼타페 하이브리드",
+      "category": "suv",
+      "fuel_type": "hybrid",
+      "size": "mid",
+      "seats": 7,
+      "price_range": {"min": 4200, "max": 5200},
+      "features": {
+        "safety": 0.85,
+        "fuel_efficiency": 0.85,
+        "performance": 0.75,
+        "design": 0.85
+      },
+      "target_customers": ["family_large", "eco_friendly", "long_distance"]
+    },
+    {
+      "id": "palisade",
+      "name": "팰리세이드",
+      "category": "suv",
+      "fuel_type": "gasoline",
+      "size": "full",
+      "seats": 7,
+      "price_range": {"min": 4500, "max": 6000},
+      "features": {
+        "safety": 0.9,
+        "fuel_efficiency": 0.55,
+        "performance": 0.85,
+        "design": 0.9
+      },
+      "target_customers": ["family_large", "luxury", "long_distance"]
+    },
+    {
+      "id": "ioniq5",
+      "name": "아이오닉 5",
+      "category": "electric",
+      "fuel_type": "electric",
+      "size": "mid",
+      "seats": 5,
+      "price_range": {"min": 5000, "max": 6500},
+      "features": {
+        "safety": 0.9,
+        "fuel_efficiency": 0.95,
+        "performance": 0.85,
+        "design": 0.95
+      },
+      "target_customers": ["eco_friendly", "tech_lover", "commuter"]
+    },
+    {
+      "id": "ioniq6",
+      "name": "아이오닉 6",
+      "category": "electric",
+      "fuel_type": "electric",
+      "size": "mid",
+      "seats": 5,
+      "price_range": {"min": 5500, "max": 7000},
+      "features": {
+        "safety": 0.9,
+        "fuel_efficiency": 0.98,
+        "performance": 0.85,
+        "design": 0.95
+      },
+      "target_customers": ["eco_friendly", "tech_lover", "business"]
+    },
+    {
+      "id": "avante_hybrid",
+      "name": "아반떼 하이브리드",
+      "category": "sedan",
+      "fuel_type": "hybrid",
+      "size": "compact",
+      "seats": 5,
+      "price_range": {"min": 2400, "max": 3100},
+      "features": {
+        "safety": 0.7,
+        "fuel_efficiency": 0.95,
+        "performance": 0.55,
+        "design": 0.8
+      },
+      "target_customers": ["commuter", "eco_friendly", "first_car"]
+    },
+    {
+      "id": "grandeur_hybrid",
+      "name": "그랜저 하이브리드",
+      "category": "sedan",
+      "fuel_type": "hybrid",
+      "size": "full",
+      "seats": 5,
+      "price_range": {"min": 4500, "max": 6000},
+      "features": {
+        "safety": 0.9,
+        "fuel_efficiency": 0.85,
+        "performance": 0.75,
+        "design": 0.9
+      },
+      "target_customers": ["business", "eco_friendly", "luxury"]
+    },
+    {
+      "id": "venue",
+      "name": "베뉴",
+      "category": "suv",
+      "fuel_type": "gasoline",
+      "size": "compact",
+      "seats": 5,
+      "price_range": {"min": 2000, "max": 2600},
+      "features": {
+        "safety": 0.7,
+        "fuel_efficiency": 0.8,
+        "performance": 0.6,
+        "design": 0.75
+      },
+      "target_customers": ["young_single", "city_driver", "first_car"]
+    },
+    {
+      "id": "avante_n",
+      "name": "아반떼 N",
+      "category": "n",
+      "fuel_type": "gasoline",
+      "size": "compact",
+      "seats": 5,
+      "price_range": {"min": 3800, "max": 4300},
+      "features": {
+        "safety": 0.75,
+        "fuel_efficiency": 0.5,
+        "performance": 0.95,
+        "design": 0.9
+      },
+      "target_customers": ["performance_lover", "young_single", "driving_enthusiast"]
+    },
+    {
+      "id": "ioniq5_n",
+      "name": "아이오닉 5 N",
+      "category": "n",
+      "fuel_type": "electric",
+      "size": "mid",
+      "seats": 5,
+      "price_range": {"min": 7500, "max": 8500},
+      "features": {
+        "safety": 0.9,
+        "fuel_efficiency": 0.8,
+        "performance": 0.98,
+        "design": 0.95
+      },
+      "target_customers": ["performance_lover", "eco_friendly", "tech_lover"]
+    },
+    {
+      "id": "kona_electric",
+      "name": "코나 일렉트릭",
+      "category": "electric",
+      "fuel_type": "electric",
+      "size": "compact",
+      "seats": 5,
+      "price_range": {"min": 4700, "max": 5500},
+      "features": {
+        "safety": 0.8,
+        "fuel_efficiency": 0.95,
+        "performance": 0.7,
+        "design": 0.85
+      },
+      "target_customers": ["eco_friendly", "city_driver", "commuter"]
+    },
+    {
+      "id": "nexo",
+      "name": "넥쏘",
+      "category": "hydrogen",
+      "fuel_type": "hydrogen",
+      "size": "mid",
+      "seats": 5,
+      "price_range": {"min": 6900, "max": 7500},
+      "features": {
+        "safety": 0.9,
+        "fuel_efficiency": 0.9,
+        "performance": 0.7,
+        "design": 0.85
+      },
+      "target_customers": ["eco_friendly", "tech_lover", "early_adopter"]
+    },
+    {
+      "id": "staria",
+      "name": "스타리아",
+      "category": "mpv",
+      "fuel_type": "gasoline",
+      "size": "full",
+      "seats": 9,
+      "price_range": {"min": 3500, "max": 5500},
+      "features": {
+        "safety": 0.85,
+        "fuel_efficiency": 0.6,
+        "performance": 0.65,
+        "design": 0.9
+      },
+      "target_customers": ["family_large", "business", "travel"]
+    },
+    {
+      "id": "ioniq9",
+      "name": "아이오닉 9",
+      "category": "electric",
+      "fuel_type": "electric",
+      "size": "full",
+      "seats": 7,
+      "price_range": {"min": 7500, "max": 9500},
+      "features": {
+        "safety": 0.95,
+        "fuel_efficiency": 0.92,
+        "performance": 0.85,
+        "design": 0.95
+      },
+      "target_customers": ["eco_friendly", "family_large", "luxury", "tech_lover"]
+    }
+  ]
+}
