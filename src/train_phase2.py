@@ -15,9 +15,9 @@ from pathlib import Path
 
 import numpy as np
 
-from env.scheduling_env import SchedulingEnv
-from agents.scheduling_agent import DQNAgent, train_dqn, evaluate_dqn
-from baselines.scheduling_baselines import (
+from src.env.scheduling_env import SchedulingEnv
+from src.agents.scheduling_agent import DQNAgent, train_dqn, evaluate_dqn
+from src.baselines.scheduling_baselines import (
     RandomSchedulingBaseline,
     FCFSSchedulingBaseline,
     GreedySchedulingBaseline,

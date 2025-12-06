@@ -363,11 +363,12 @@ class DQNAgent:
         loss = self.loss_fn(current_q, target_q)
 
         # === 6. 역전파 및 가중치 업데이트 ===
-        self.optimizer.zero_grad()  # gradient 초기화
-        loss.backward()             # 역전파
-        # Gradient Clipping: gradient 폭발 방지 (학습 안정성)
+        # 수식: θ ← θ - α · ∇θ L(θ)  (경사하강법)
+        self.optimizer.zero_grad()  # gradient 초기화: ∇θ = 0
+        loss.backward()             # 역전파: ∇θ L(θ) 계산
+        # Gradient Clipping: ||∇θ|| ≤ 1.0으로 제한 (gradient 폭발 방지)
         torch.nn.utils.clip_grad_norm_(self.q_network.parameters(), max_norm=1.0)
-        self.optimizer.step()       # 가중치 업데이트
+        self.optimizer.step()       # 가중치 업데이트: θ ← θ - α · ∇θ L(θ)
 
         # === 통계 기록 ===
         self.total_updates += 1

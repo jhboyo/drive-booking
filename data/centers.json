@@ -501,8 +501,8 @@
     {"type": "low", "description": "특정 시간만 가능", "alt_accept_prob": 0.2}
   ],
   "peak_times": {
-    "weekday": [10, 11, 14, 15],
-    "weekend": [10, 11, 12, 14, 15, 16]
+    "weekday": [1, 2, 5, 6],
+    "weekend": [1, 2, 3, 5, 6, 7]
   },
   "regions": [
     {"id": "seoul", "name": "서울", "center_count": 6},
