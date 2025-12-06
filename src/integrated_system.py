@@ -226,22 +226,58 @@ class IntegratedSystem:
 
         return result
 
+    def _get_vehicle_availability(self) -> np.ndarray:
+        """
+        Phase 2 환경에서 차량 가용성 정보 추출
+
+        Returns:
+            차량별 가용성 (23차원, 0~1 범위)
+            1.0: 완전 가용, 0.0: 가용 불가
+        """
+        # Phase 2 환경 초기화하여 가용성 확인
+        self.phase2_env.reset()
+
+        n_vehicles = 23  # 차량 수
+
+        # 각 차량의 가용 슬롯 비율 계산
+        availability = np.zeros(n_vehicles)
+
+        for vid in range(n_vehicles):
+            # 해당 차량의 가용 슬롯 수 (schedule_state > 0이면 가용)
+            available_slots = np.sum(self.phase2_env.schedule_state[:, :, vid] > 0)
+            total_slots = self.phase2_env.schedule_state.shape[0] * self.phase2_env.schedule_state.shape[1]
+            availability[vid] = available_slots / total_slots
+
+        return availability
+
+    def _get_vehicle_index(self, vehicle_name: str) -> Optional[int]:
+        """차량 이름으로 인덱스 반환"""
+        if vehicle_name is None:
+            return None
+        vehicles = self.phase1_env.vehicles
+        for idx, v in enumerate(vehicles):
+            if v['name'] == vehicle_name:
+                return idx
+        return None
+
     def _run_phase1(
         self,
         training: bool = False,
         customer_idx: Optional[int] = None
     ) -> dict:
         """
-        Phase 1 (차량 추천) 실행
+        Phase 1 (차량 추천) 실행 - 가용성 정보 활용 버전
 
         고객 프로필 기반으로 대화형 추천을 수행함.
         에이전트가 질문을 선택하고, 적절한 시점에 차량을 추천함.
+        추천 시 센터 가용성 정보를 활용하여 가용한 차량에 보너스 부여.
 
         강화학습 루프:
             while not done:
                 1. 에이전트가 액션 선택 (질문 or 추천)
                 2. 환경이 상태 전이 및 보상 계산
-                3. (학습 모드) Q-table 업데이트
+                3. 추천 시 가용성 보너스 추가
+                4. (학습 모드) Q-table 업데이트
 
         Args:
             training: 학습 모드 여부
@@ -254,6 +290,11 @@ class IntegratedSystem:
                 - recommended_vehicle: 추천된 차량 ID
                 - questions_count: 질문 횟수
         """
+        # =====================================================================
+        # 차량 가용성 정보 추출 (Phase 2 환경에서)
+        # =====================================================================
+        availability = self._get_vehicle_availability()
+
         # =====================================================================
         # 환경 초기화 (새 고객 생성)
         # =====================================================================
@@ -279,7 +320,18 @@ class IntegratedSystem:
             # 2. 환경에서 액션 실행 → 다음 상태, 보상, 종료 여부 반환
             next_obs, reward, terminated, truncated, info = self.phase1_env.step(action)
 
-            # 3. 학습 모드일 때 Q-table 업데이트
+            # 3. 추천 액션인 경우 가용성 보너스 추가 (개선점)
+            if action >= 8:  # 추천 액션 (8-11)
+                top_candidates = info.get('top_candidates', [])
+                if top_candidates:
+                    vehicle_name = top_candidates[0][0]
+                    vehicle_idx = self._get_vehicle_index(vehicle_name)
+                    if vehicle_idx is not None and vehicle_idx < len(availability):
+                        # 가용성 높은 차량 추천 시 보너스 (+0~2점)
+                        availability_bonus = availability[vehicle_idx] * 2.0
+                        reward += availability_bonus
+
+            # 4. 학습 모드일 때 Q-table 업데이트
             #    Q(s,a) ← Q(s,a) + α[r + γ·max Q(s',a') - Q(s,a)]
             if training:
                 self.phase1_agent.update(obs, action, reward, next_obs, terminated, truncated)
@@ -416,19 +468,20 @@ class IntegratedSystem:
         phase2_result: dict
     ) -> float:
         """
-        시너지 보너스 계산 (Phase 3 핵심 기여)
+        개선된 시너지 보너스 계산 (Phase 3 핵심 기여)
 
         개별 Phase 독립 실행 대비 통합 실행의 이점을 수치화함.
         두 Phase 간 연계가 잘 될수록 높은 보너스 부여.
 
-        시너지 보너스 구성:
-            1. 즉시 예약 성공 (+5): 대안 제시 없이 바로 예약 성공
-               - 의미: Phase 1이 가용한 차량을 잘 추천함
-            2. 추천-스케줄 매칭 (+3): 추천 차량이 선호 시간에 가용
-               - 의미: Phase 1이 스케줄 상황을 간접 반영함
+        개선된 시너지 보너스 구성 (최대 ~17.5점):
+            1. 질문 효율성 (0~5점): 질문이 적을수록 높은 점수
+            2. 시도 효율성 (0~7.5점): 스케줄링 시도가 적을수록 높은 점수
+            3. 즉시 예약 보너스 (0~3점): 첫 시도 성공 시
+            4. 선호 시간 매칭 (0~2점): 고객 선호 시간에 예약 성공 시
 
         연구적 의의:
             - 개별 학습된 에이전트들의 협업 효과 측정
+            - 효율적 행동에 연속적 보상으로 학습 가이드 강화
             - End-to-End 최적화의 필요성 입증
 
         Args:
@@ -436,7 +489,7 @@ class IntegratedSystem:
             phase2_result: Phase 2 결과 딕셔너리 (None 가능)
 
         Returns:
-            시너지 보너스 값 (0.0 ~ 8.0)
+            시너지 보너스 값 (0.0 ~ 17.5)
         """
         # Phase 2 실행 안 됐으면 시너지 없음
         if phase2_result is None:
@@ -445,20 +498,36 @@ class IntegratedSystem:
         synergy = 0.0
 
         # =====================================================================
-        # 시너지 1: 즉시 예약 성공 보너스 (+5점)
+        # 시너지 1: 질문 효율성 보너스 (0~5점)
         # =====================================================================
-        # 조건: Phase 2에서 첫 시도(attempt_count=0)에 예약 성공
-        # 의미: Phase 1이 가용한 차량을 추천해서 바로 예약됨
-        if phase2_result['success'] and phase2_result['attempt_count'] == 0:
-            synergy += self.SYNERGY_IMMEDIATE_BOOKING
+        # 질문 수가 적을수록 높은 보너스
+        # 0개 질문 = 5점, 5개 이상 = 0점
+        questions_count = phase1_result.get('questions_count', 0)
+        question_efficiency = max(0, 5 - questions_count)
+        synergy += question_efficiency
 
         # =====================================================================
-        # 시너지 2: 추천-스케줄 매칭 보너스 (+3점)
+        # 시너지 2: 시도 효율성 보너스 (0~7.5점)
         # =====================================================================
-        # 조건: 추천된 차량이 고객 선호 시간에 가용했음
-        # 의미: Phase 1 추천이 센터 가용성과 잘 맞음
-        if phase2_result['initial_available']:
-            synergy += self.SYNERGY_SCHEDULE_MATCH
+        # 스케줄링 시도가 적을수록 높은 보너스
+        # 1회 시도 = 6점, 5회 이상 = 0점
+        attempt_count = phase2_result.get('attempt_count', 1)
+        attempt_efficiency = max(0, 5 - attempt_count) * 1.5
+        synergy += attempt_efficiency
+
+        # =====================================================================
+        # 시너지 3: 즉시 예약 보너스 (0~3점)
+        # =====================================================================
+        # 첫 시도에 예약 성공 시 추가 보너스
+        if attempt_count == 1 and phase2_result.get('booking_success', False):
+            synergy += 3.0
+
+        # =====================================================================
+        # 시너지 4: 선호 시간 매칭 보너스 (0~2점)
+        # =====================================================================
+        # 고객이 원하는 시간에 예약 성공 시
+        if phase2_result.get('preferred_time_match', False):
+            synergy += 2.0
 
         return synergy
 
@@ -641,9 +710,9 @@ class IntegratedSystem:
 
 def train_integrated(
     system: IntegratedSystem,
-    n_episodes: int = 2000,
-    phase1_pretrain: int = 500,
-    phase2_pretrain: int = 500,
+    n_episodes: int = 1000,
+    phase1_pretrain: int = 1000,
+    phase2_pretrain: int = 1000,
     log_interval: int = 100,
     verbose: bool = True
 ) -> dict:

@@ -30,7 +30,7 @@ class QNetwork(nn.Module):
     출력: 각 액션의 Q값 (6차원)
     """
 
-    def __init__(self, state_dim: int, action_dim: int, hidden_dim: int = 128):
+    def __init__(self, state_dim: int, action_dim: int, hidden_dim: int = 256):
         """
         Q-Network 초기화
 
@@ -43,11 +43,11 @@ class QNetwork(nn.Module):
 
         # 3층 완전연결 신경망 구성
         self.network = nn.Sequential(
-            nn.Linear(state_dim, hidden_dim),   # 입력층 → 은닉층1 (159 → 128)
+            nn.Linear(state_dim, hidden_dim),   # 입력층 → 은닉층1 (159 → 256)
             nn.ReLU(),                          # 활성화 함수
-            nn.Linear(hidden_dim, hidden_dim),  # 은닉층1 → 은닉층2 (128 → 128)
+            nn.Linear(hidden_dim, hidden_dim),  # 은닉층1 → 은닉층2 (256 → 256)
             nn.ReLU(),                          # 활성화 함수
-            nn.Linear(hidden_dim, action_dim)   # 은닉층2 → 출력층 (128 → 6)
+            nn.Linear(hidden_dim, action_dim)   # 은닉층2 → 출력층 (256 → 6)
         )
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
@@ -175,7 +175,7 @@ class DQNAgent:
         self,
         state_dim: int = 159,        # 상태 차원 (고객선호6 + 슬롯126 + 차량23 + 메타4)
         action_dim: int = 6,          # 액션 수 (확정1 + 대안5)
-        hidden_dim: int = 128,        # 은닉층 뉴런 수
+        hidden_dim: int = 256,        # 은닉층 뉴런 수 (128 → 256 개선)
         learning_rate: float = 1e-3,  # 학습률 (Adam 옵티마이저용)
         discount_factor: float = 0.99, # 할인율 γ (미래 보상의 현재 가치)
         epsilon_start: float = 1.0,   # 초기 탐험률 (100% 랜덤)
