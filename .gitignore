@@ -52,6 +52,6 @@ Thumbs.db
 .uv/
 uv.lock
 
-resource/docs/
+docs/
 resource/image/
 CLAUDE.md

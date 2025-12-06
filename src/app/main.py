@@ -35,237 +35,19 @@ st.set_page_config(
 )
 
 # ============================================================================
-# 현대자동차 브랜드 컬러 CSS
+# CSS 스타일 로드
 # ============================================================================
 
-st.markdown("""
-<style>
-    /* 현대자동차 브랜드 컬러 */
-    :root {
-        --hyundai-blue: #002C5F;
-        --active-blue: #00AAD2;
-        --light-blue: #E8F4F8;
-        --dark-gray: #333333;
-        --light-gray: #F4F4F4;
-    }
+def load_css():
+    """외부 CSS 파일 로드"""
+    css_path = project_root / "resource" / "styles" / "main.css"
+    if css_path.exists():
+        with open(css_path, "r", encoding="utf-8") as f:
+            return f"<style>{f.read()}</style>"
+    return ""
 
-    /* Streamlit 헤더 - 현대 블루 */
-    [data-testid="stHeader"] {
-        background: #002C5F;
-    }
+st.markdown(load_css(), unsafe_allow_html=True)
 
-    header[data-testid="stHeader"] {
-        background: #002C5F;
-    }
-
-    [data-testid="stHeader"]::after {
-        display: none;
-    }
-
-    [data-testid="stToolbar"] {
-        background: #002C5F;
-    }
-
-    /* Deploy 버튼 숨김 */
-    [data-testid="stToolbar"] button[kind="header"],
-    [data-testid="stToolbar"] > div > button,
-    button[data-testid="baseButton-header"] {
-        display: none !important;
-    }
-
-    /* 메인 배경 */
-    .main {
-        background: #F4F4F4;
-    }
-
-    .main > div {
-        padding-top: 0rem;
-    }
-
-    .block-container {
-        padding-top: 1rem;
-    }
-
-    /* 헤더 컨테이너 - 단색 블루 (전체 너비) */
-    .header-container {
-        background: #002C5F;
-        padding: 2.5rem 1.5rem 4rem 1.5rem;
-        margin: -1rem calc(-50vw + 50%) 0 calc(-50vw + 50%);
-        width: 100vw;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .header-inner {
-        max-width: 1200px;
-        width: 100%;
-        padding: 0 1rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .header-icon {
-        font-size: 2.5rem;
-    }
-
-    .header-left {
-        flex: 1;
-        color: white;
-    }
-
-    .header-title {
-        color: white;
-        font-size: 1.5rem;
-        font-weight: 700;
-        margin: 0;
-        margin-bottom: 0.3rem;
-    }
-
-    .header-subtitle {
-        color: rgba(255, 255, 255, 0.9);
-        font-size: 0.9rem;
-        margin: 0;
-        font-weight: 400;
-    }
-
-    .header-icon {
-        font-size: 3rem;
-        flex-shrink: 0;
-        margin-left: 0.5rem;
-    }
-
-    /* 레이어드 카드 */
-    .layered-card {
-        background: white;
-        padding: 1rem 1.2rem;
-        border-radius: 18px;
-        box-shadow: 0 4px 20px rgba(0, 44, 95, 0.15);
-        margin: -3rem 1rem 1rem 1rem;
-        text-align: center;
-        position: relative;
-        z-index: 10;
-    }
-
-    /* 상태 배지 */
-    .status-badge {
-        display: inline-block;
-        background: #E8F4F8;
-        color: #002C5F;
-        padding: 0.4rem 0.8rem;
-        border-radius: 15px;
-        font-size: 0.75rem;
-        font-weight: 600;
-        margin: 0.2rem;
-    }
-
-    /* 채팅 메시지 스타일 */
-    .stChatMessage {
-        border-radius: 18px;
-        padding: 1rem;
-        margin: 0.5rem 0;
-    }
-
-    /* 버튼 스타일 - 현대 블루 */
-    .stButton > button {
-        background: #002C5F;
-        color: white;
-        border: none;
-        border-radius: 12px;
-        padding: 0.5rem 1rem;
-        font-weight: 500;
-        transition: all 0.2s;
-    }
-
-    .stButton > button:hover {
-        background: #00AAD2;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0, 170, 210, 0.3);
-    }
-
-    /* 옵션 버튼 그리드 */
-    .option-button {
-        background: white;
-        border: 2px solid #E8F4F8;
-        border-radius: 12px;
-        padding: 1rem;
-        text-align: center;
-        cursor: pointer;
-        transition: all 0.2s;
-        margin: 0.3rem;
-    }
-
-    .option-button:hover {
-        border-color: #00AAD2;
-        background: #E8F4F8;
-    }
-
-    /* 차량 카드 */
-    .vehicle-card {
-        background: white;
-        border-radius: 16px;
-        padding: 1.5rem;
-        box-shadow: 0 4px 15px rgba(0, 44, 95, 0.1);
-        margin: 1rem 0;
-        border-left: 4px solid #002C5F;
-    }
-
-    .vehicle-name {
-        color: #002C5F;
-        font-size: 1.3rem;
-        font-weight: 700;
-        margin-bottom: 0.5rem;
-    }
-
-    .vehicle-info {
-        color: #666;
-        font-size: 0.9rem;
-        margin: 0.3rem 0;
-    }
-
-    .vehicle-price {
-        color: #00AAD2;
-        font-size: 1.1rem;
-        font-weight: 600;
-        margin-top: 0.5rem;
-    }
-
-    /* 진행 상태 바 */
-    .progress-container {
-        background: #E8F4F8;
-        border-radius: 10px;
-        padding: 0.3rem;
-        margin: 1rem 0;
-    }
-
-    .progress-bar {
-        background: linear-gradient(90deg, #002C5F 0%, #00AAD2 100%);
-        height: 8px;
-        border-radius: 8px;
-        transition: width 0.3s ease;
-    }
-
-    /* 빠른 선택 칩 */
-    .quick-chip {
-        display: inline-block;
-        background: #E8F4F8;
-        color: #002C5F;
-        padding: 0.5rem 1rem;
-        border-radius: 20px;
-        font-size: 0.85rem;
-        font-weight: 500;
-        margin: 0.2rem;
-        cursor: pointer;
-        transition: all 0.2s;
-    }
-
-    .quick-chip:hover {
-        background: #00AAD2;
-        color: white;
-    }
-</style>
-""", unsafe_allow_html=True)
 
 # ============================================================================
 # 데이터 로드
@@ -496,10 +278,10 @@ with chat_container:
     # 채팅 히스토리 표시
     for chat in st.session_state.chat_history:
         if chat["role"] == "assistant":
-            with st.chat_message("assistant", avatar="🚗"):
+            with st.chat_message("assistant", avatar="🤖"):
                 st.markdown(chat["content"])
         else:
-            with st.chat_message("user", avatar="👤"):
+            with st.chat_message("user", avatar="🙂"):
                 st.markdown(chat["content"])
 
 # ============================================================================
@@ -508,12 +290,10 @@ with chat_container:
 
 # 인사 단계
 if st.session_state.phase == "greeting":
-    col1, col2, col3 = st.columns([1, 1, 1])
-    with col2:
-        if st.button("🚀 시작하기", use_container_width=True):
-            st.session_state.phase = "questioning"
-            st.session_state.chat_history.append({"role": "user", "content": "시작할게요!"})
-            st.rerun()
+    if st.button("🚀 시작하기", type="secondary"):
+        st.session_state.phase = "questioning"
+        st.session_state.chat_history.append({"role": "user", "content": "시작할게요!"})
+        st.rerun()
 
 # 질문 단계
 elif st.session_state.phase == "questioning":
@@ -540,11 +320,12 @@ elif st.session_state.phase == "questioning":
         current_q = questions[st.session_state.current_question_idx]
 
         st.markdown("##### 답변을 선택해주세요:")
-        cols = st.columns(len(current_q["options"]))
 
+        # 버튼들 가로 배치
+        cols = st.columns(len(current_q["options"]))
         for i, option in enumerate(current_q["options"]):
             with cols[i]:
-                if st.button(option, key=f"opt_{current_q['id']}_{i}", use_container_width=True):
+                if st.button(option, key=f"opt_{current_q['id']}_{i}", type="secondary"):
                     # 응답 저장
                     st.session_state.answers[current_q["attribute"]] = option
                     st.session_state.questions_asked.append(current_q["id"])
@@ -638,10 +419,18 @@ elif st.session_state.phase == "scheduling":
             "content": f"{selected_date.strftime('%Y년 %m월 %d일')} {selected_time}"
         })
 
+        vehicle = st.session_state.recommended_vehicle
+        fuel_type_kr = {"gasoline": "가솔린", "hybrid": "하이브리드", "electric": "전기"}.get(vehicle['fuel_type'], vehicle['fuel_type'])
+        category_kr = {"sedan": "세단", "suv": "SUV", "mpv": "MPV"}.get(vehicle['category'], vehicle['category'])
+
         complete_msg = f"""🎉 **예약이 완료되었습니다!**
 
 📌 **예약 정보**
-- 차량: {st.session_state.recommended_vehicle['name']}
+- 차량: {vehicle['name']}
+- 차종: {category_kr}
+- 연료: {fuel_type_kr}
+- 좌석: {vehicle['seats']}인승
+- 가격대: {vehicle['price_range']['min']:,}~{vehicle['price_range']['max']:,}만원
 - 날짜: {selected_date.strftime('%Y년 %m월 %d일')}
 - 시간: {selected_time}
 
@@ -654,7 +443,7 @@ elif st.session_state.phase == "scheduling":
 
 # 완료 단계
 elif st.session_state.phase == "complete":
-    st.balloons()
+    st.toast("🎉 시승 예약이 완료되었습니다!", icon="✅")
 
     if st.button("🔄 새로운 상담 시작", use_container_width=True):
         # 세션 초기화

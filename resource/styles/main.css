@@ -1,0 +1,251 @@
+/*
+ * Brand 차 시승 예약 챗봇 스타일
+ * Hyundai Brand Color Scheme
+ */
+
+/* 현대자동차 브랜드 컬러 */
+:root {
+    --hyundai-blue: #002C5F;
+    --active-blue: #00AAD2;
+    --light-blue: #E8F4F8;
+    --dark-gray: #333333;
+    --light-gray: #F4F4F4;
+}
+
+/* Streamlit 헤더 - 현대 블루 */
+[data-testid="stHeader"] {
+    background: #002C5F;
+}
+
+header[data-testid="stHeader"] {
+    background: #002C5F;
+}
+
+[data-testid="stHeader"]::after {
+    display: none;
+}
+
+[data-testid="stToolbar"] {
+    background: #002C5F;
+}
+
+/* Deploy 버튼 숨김 */
+[data-testid="stToolbar"] button[kind="header"],
+[data-testid="stToolbar"] > div > button,
+button[data-testid="baseButton-header"] {
+    display: none !important;
+}
+
+/* 메인 배경 */
+.main {
+    background: #F4F4F4;
+}
+
+.main > div {
+    padding-top: 0rem;
+}
+
+.block-container {
+    padding-top: 1rem;
+}
+
+/* 헤더 컨테이너 */
+.header-container {
+    background: #002C5F;
+    padding: 2.5rem 1.5rem 4rem 1.5rem;
+    margin: -1rem calc(-50vw + 50%) 0 calc(-50vw + 50%);
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-inner {
+    max-width: 1200px;
+    width: 100%;
+    padding: 0 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-left {
+    flex: 1;
+    color: white;
+}
+
+.header-title {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+    margin-bottom: 0.3rem;
+}
+
+.header-subtitle {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.9rem;
+    margin: 0;
+    font-weight: 400;
+}
+
+.header-icon {
+    font-size: 3rem;
+    flex-shrink: 0;
+    margin-left: 0.5rem;
+}
+
+/* 레이어드 카드 */
+.layered-card {
+    background: white;
+    padding: 1rem 1.2rem;
+    border-radius: 18px;
+    box-shadow: 0 4px 20px rgba(0, 44, 95, 0.15);
+    margin: -3rem 1rem 1rem 1rem;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+}
+
+/* 상태 배지 */
+.status-badge {
+    display: inline-block !important;
+    background: #E8F4F8 !important;
+    color: #002C5F !important;
+    padding: 0.15rem 0.4rem !important;
+    border-radius: 8px !important;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    margin: 0.1rem !important;
+}
+
+/* 채팅 메시지 스타일 */
+.stChatMessage {
+    border-radius: 12px;
+    padding: 0.4rem 0.8rem;
+    margin: 0.15rem 0;
+    min-height: auto !important;
+}
+
+/* 마크다운 제목/텍스트 간격 축소 */
+.stMarkdown h5 {
+    font-size: 0.8rem !important;
+    margin: 0.2rem 0 0.2rem 0 !important;
+    color: #64748B;
+    font-weight: 500;
+}
+
+.stMarkdown p {
+    font-size: 0.85rem;
+    margin: 0.1rem 0;
+}
+
+/* 버튼 컨테이너 간격 축소 */
+.stButton {
+    margin-bottom: 0.2rem !important;
+    margin-top: 0 !important;
+}
+
+/* 전체 요소 간격 축소 */
+.element-container {
+    margin-bottom: 0.15rem !important;
+}
+
+/* 채팅 컨테이너 간격 */
+[data-testid="stChatMessageContent"] {
+    padding: 0.1rem 0 !important;
+    margin-top: 0.4rem !important;
+}
+
+[data-testid="stChatMessageContent"] p {
+    font-size: 0.95rem !important;
+    line-height: 1.4 !important;
+    margin: 0 !important;
+}
+
+[data-testid="stVerticalBlock"] > div {
+    gap: 0.1rem !important;
+}
+
+/* 채팅 아바타 크기 축소 */
+[data-testid="stChatMessageAvatarUser"],
+[data-testid="stChatMessageAvatarAssistant"] {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 0.9rem !important;
+}
+
+/* 기본 버튼 스타일 - 현대 블루 */
+.stButton > button {
+    background: #002C5F;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.stButton > button:hover {
+    background: #00AAD2;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 170, 210, 0.3);
+}
+
+/* Secondary 버튼 (옵션 버튼) - status-badge 스타일 */
+button[data-testid="stBaseButton-secondary"] {
+    background: #E8F4F8 !important;
+    color: #002C5F !important;
+    border: none !important;
+    border-radius: 12px !important;
+    padding: 0.4rem 0.8rem !important;
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    transition: all 0.15s !important;
+    box-shadow: none !important;
+}
+
+button[data-testid="stBaseButton-secondary"] p,
+button[data-testid="stBaseButton-secondary"] span,
+button[data-testid="stBaseButton-secondary"] div {
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    color: inherit !important;
+}
+
+button[data-testid="stBaseButton-secondary"]:hover {
+    background: #00AAD2 !important;
+    color: white !important;
+    transform: scale(1.03);
+}
+
+/* Columns 가로 정렬 강제 */
+[data-testid="stHorizontalBlock"] {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: 0.3rem !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+}
+
+[data-testid="stHorizontalBlock"] > [data-testid="stColumn"] {
+    width: fit-content !important;
+    min-width: fit-content !important;
+    max-width: fit-content !important;
+    flex: 0 0 auto !important;
+    padding: 0 !important;
+}
+
+/* 모바일에서도 가로 유지 */
+@media (max-width: 768px) {
+    [data-testid="stHorizontalBlock"] {
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        gap: 0.3rem !important;
+    }
+    [data-testid="stHorizontalBlock"] > [data-testid="stColumn"] {
+        width: fit-content !important;
+        flex: 0 0 auto !important;
+    }
+}

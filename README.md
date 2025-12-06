@@ -127,7 +127,7 @@ Agent: "싼타페 하이브리드 추천드립니다"    ← Action 3: 추천 �
 
 ## 🎯 MDP 설계
 
-상세 State, Action, Reward 설계는 [MDP_DESIGN.md](./resource/docs/MDP_DESIGN.md) 참조.
+상세 State, Action, Reward 설계는 [MDP_DESIGN.md](./docs/MDP_DESIGN.md) 참조.
 
 ---
 
@@ -775,7 +775,7 @@ uv run python -m src.visualization.plot_phase3
 
 ## 📅 로드맵
 
-상세 구현 일정은 [ROADMAP.md](./resource/docs/ROADMAP.md) 참조.
+상세 구현 일정은 [ROADMAP.md](./docs/ROADMAP.md) 참조.
 
 ---
 
