@@ -2,6 +2,10 @@
 
 > **Conversational Vehicle Recommendation and Scheduling System using Reinforcement Learning**
 
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://drive-booking-rl.streamlit.app/)
+
+**🚀 [실시간 데모 바로가기](https://drive-booking-rl.streamlit.app/)** - 학습된 강화학습 모델을 직접 체험해볼 수 있음
+
 ---
 
 ## 💡 연구 동기
@@ -69,6 +73,12 @@ TO-BE: AI가 최소 질문으로 추천 + 최적 일정 자동 배정 (2단계)
 ---
 
 ## 🚀 실행 방법
+
+### 온라인 데모 (권장)
+
+별도 설치 없이 바로 체험 가능: **https://drive-booking-rl.streamlit.app/**
+
+### 로컬 실행
 
 ```bash
 # uv 설치 (최초 1회)

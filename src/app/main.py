@@ -82,10 +82,16 @@ st.markdown(load_css(), unsafe_allow_html=True)
 # 데이터 로드
 # ============================================================================
 
+@st.cache_data
 def load_questions():
     """질문 데이터 로드"""
-    with open(project_root / "data" / "questions.json", "r", encoding="utf-8") as f:
-        return json.load(f)["questions"]
+    try:
+        with open(project_root / "data" / "questions.json", "r", encoding="utf-8") as f:
+            return json.load(f)["questions"]
+    except Exception as e:
+        st.error(f"질문 데이터 로드 실패: {e}")
+        st.error(f"project_root: {project_root}")
+        return []
 
 @st.cache_data
 def load_vehicles():

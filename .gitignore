@@ -37,8 +37,8 @@ wheels/
 .ipynb_models/
 
 # PyTorch
-*.pth
-*.pt
+#*.pth
+#*.pt
 
 # Project specific
 logs/
