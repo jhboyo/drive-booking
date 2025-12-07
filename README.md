@@ -2,6 +2,43 @@
 
 > **Interactive Conversational Recommendation System using Reinforcement Learning**
 
+## 💡 연구 동기
+
+### "20 Questions" 게임에서 업무 도메인으로
+
+본 프로젝트는 EMNLP 2018에 발표된 **"Playing 20 Question Game with Policy-Based Reinforcement Learning"** (Hu et al., 2018) 논문에서 영감을 받아, 학술적 게임 환경의 강화학습 기법을 **실제 업무 도메인에 적용**한 연구임.
+
+#### 원 논문의 핵심 아이디어
+
+| 구분 | 20 Questions 게임 |
+|------|-------------------|
+| **목표** | 최대 20개 질문으로 사용자가 생각한 물체(유명인, 동물 등) 맞추기 |
+| **방법** | 정책 기반 강화학습으로 최적의 질문 선택 정책 학습 |
+| **핵심 기여** | 노이즈 있는 답변에 강건, 객체 데이터베이스 의존성 제거 |
+
+#### 본 프로젝트의 확장
+
+원 논문의 "질문을 통한 정보 수집 → 최종 추론" 프레임워크를 **자동차 시승 예약 도메인**에 확장 적용함:
+
+| 구분 | 20 Questions 게임 | 시승 예약 시스템 (본 프로젝트) |
+|------|-------------------|-------------------------------|
+| **환경** | 게임 환경 | 실제 업무 환경 (차량 DB, 센터 스케줄) |
+| **목표** | 물체 맞추기 | 최적 차량 추천 + 일정 배정 |
+| **질문 수** | 최대 20개 | **최대 5개** (효율성 강조) |
+| **보상** | 정답 여부 | 고객 만족도 + 예약 성사 - 질문 수 |
+| **확장** | 단일 Phase | **Two-Phase** (추천 + 스케줄링) |
+
+#### 연구적 기여
+
+1. **도메인 적용**: 학술적 게임 환경 → 실제 비즈니스 프로세스
+2. **효율성 강화**: 20개 질문 → **3개 이하 질문**으로 목표 달성
+3. **파이프라인 확장**: 정보 수집 → 추천 → **스케줄링까지 End-to-End 통합**
+4. **시너지 최적화**: Phase 간 협업 효과를 Synergy Bonus로 정량화
+
+> 📄 **참고 논문**: Hu, H., Wu, X., Luo, B., Tao, C., Xu, C., Wu, W., & Chen, Z. (2018). Playing 20 Question Game with Policy-Based Reinforcement Learning. *EMNLP 2018*. [arXiv:1808.07645](https://arxiv.org/abs/1808.07645)
+
+---
+
 ## 📋 프로젝트 개요
 
 자동차 브랜드 홈페이지의 시승 예약 과정에서 고객이 겪는 번거로움을 **강화학습 기반 대화형 추천 시스템**으로 해결함.
@@ -660,7 +697,7 @@ uv run python -m src.train_phase1 --lr 0.1 --gamma 0.95 --epsilon-decay 0.998
 uv run python -m src.evaluate_phase1
 
 # 저장된 모델 로드하여 평가
-uv run python -m src.evaluate_phase1 --model checkpoints/q_learning_model.json
+uv run python -m src.evaluate_phase1 --model checkpoints/standalone/q_learning_model.json
 
 # 평가 에피소드 수 조정
 uv run python -m src.evaluate_phase1 --episodes 200
@@ -751,7 +788,7 @@ uv run python -m src.integrated_system
 - Phase 2 사전학습 (50 에피소드)
 - 통합 학습 (100 에피소드)
 - 평가 (50 에피소드)
-- 모델 저장 (`checkpoints/integrated/`)
+- 모델 저장 (`checkpoints/standalone/`, `checkpoints/chatbot/`)
 
 이 모두 자동으로 실행됨.
 
@@ -834,6 +871,11 @@ driving-test/
 │   ├── train_phase3.py            # Phase 3 학습
 │   └── evaluate_phase3.py         # Phase 3 평가
 ├── checkpoints/                   # 학습된 모델 저장
+│   ├── standalone/                # 독립 실행용 모델
+│   │   └── q_learning_model.json  # Phase 1 Q-Learning 모델
+│   ├── chatbot/                   # 챗봇 앱용 모델
+│   │   └── chatbot_q_learning.json
+│   └── dqn_scheduling.pth         # Phase 2 DQN 모델
 ├── results/                       # 실험 결과
 │   ├── phase3_results.json        # Phase 3 결과 데이터
 │   └── figures/                   # 시각화 결과
@@ -852,6 +894,12 @@ driving-test/
 ---
 
 ## 📖 참고 자료
+
+### 핵심 논문
+
+- Hu, H., Wu, X., Luo, B., Tao, C., Xu, C., Wu, W., & Chen, Z. (2018). **Playing 20 Question Game with Policy-Based Reinforcement Learning**. *EMNLP 2018*. [arXiv:1808.07645](https://arxiv.org/abs/1808.07645)
+
+### 기술 문서
 
 - [Gymnasium Documentation](https://gymnasium.farama.org)
 - [Spinning Up in Deep RL](https://spinningup.openai.com)

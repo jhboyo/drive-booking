@@ -53,7 +53,6 @@ st.markdown(load_css(), unsafe_allow_html=True)
 # 데이터 로드
 # ============================================================================
 
-@st.cache_data
 def load_questions():
     """질문 데이터 로드"""
     with open(project_root / "data" / "questions.json", "r", encoding="utf-8") as f:
@@ -83,12 +82,12 @@ def load_agents():
         )
 
         # 학습된 모델 로드 시도
-        checkpoint_path = project_root / "checkpoints" / "integrated" / "phase1_q_learning.json"
+        checkpoint_path = project_root / "checkpoints" / "chatbot" / "chatbot_q_learning.json"
         if checkpoint_path.exists():
             phase1_agent.load(str(checkpoint_path))
             model_loaded = True
         else:
-            # 체크포인트 없으면 간단히 학습
+            # 체크포인트 없으면 새로 시작
             model_loaded = False
 
         return phase1_agent, phase1_env, model_loaded
@@ -127,7 +126,152 @@ def init_session_state():
     if "observation" not in st.session_state:
         st.session_state.observation = None
 
+    # Reward 추적 (RL 시각화용)
+    if "reward" not in st.session_state:
+        st.session_state.reward = 0.0  # 누적 보상
+
+    # RL Trajectory 추적 (모델 학습용)
+    if "trajectory" not in st.session_state:
+        st.session_state.trajectory = []  # [(observation, action, reward), ...]
+
+    if "episode_step_reward" not in st.session_state:
+        st.session_state.episode_step_reward = 0.0  # 현재 스텝의 보상
+
+    # 현재 Action 표시용
+    if "current_action" not in st.session_state:
+        st.session_state.current_action = "대기 중"
+
 init_session_state()
+
+# ============================================================================
+# RL 모델 연동 함수
+# ============================================================================
+
+def build_observation() -> np.ndarray:
+    """
+    챗봇 상태를 RL 에이전트용 observation 벡터로 변환
+
+    Returns:
+        69차원 observation 벡터
+    """
+    obs = np.zeros(69)
+
+    # [0-4]: 고객 정보 (기본값 사용 - 챗봇에서는 수집 안 함)
+    obs[0] = 0.0  # 나이 (정규화, 기본: 중년)
+    obs[1] = 0.0  # 성별 (기본: 중립)
+    obs[2] = 0.0  # 외국인 여부
+    obs[3] = 0.0  # 직장인 여부
+    obs[4] = 1.0  # 관심차량 있음 (시승 예약이므로)
+
+    # [5-44]: 질문 응답 (8질문 x 5옵션, one-hot)
+    # questions.json의 attribute와 매핑
+    attribute_to_idx = {
+        "usage": 0, "fuel_type": 1, "family_size": 2, "budget": 3,
+        "priority": 4, "size": 5, "body_type": 6, "color": 7
+    }
+
+    for attr, q_idx in attribute_to_idx.items():
+        if attr in st.session_state.answers:
+            # 해당 질문의 옵션 인덱스 찾기
+            for q in questions:
+                if q.get("attribute") == attr:
+                    answer = st.session_state.answers[attr]
+                    if answer in q["options"]:
+                        opt_idx = q["options"].index(answer)
+                        # one-hot 인코딩
+                        base_idx = 5 + q_idx * 5
+                        if opt_idx < 5:  # 최대 5개 옵션
+                            obs[base_idx + opt_idx] = 1.0
+                    break
+
+    # [45]: 질문 횟수 비율 (0~1)
+    max_questions = 8
+    obs[45] = len(st.session_state.questions_asked) / max_questions
+
+    # [46-68]: 차량 점수 (간단히 균등 분포)
+    obs[46:69] = 0.5
+
+    return obs
+
+
+def get_action_for_question(question_attr: str) -> int:
+    """질문 attribute를 RL action 인덱스로 변환"""
+    attr_to_action = {
+        "usage": 0, "fuel_type": 1, "family_size": 2, "budget": 3,
+        "priority": 4, "size": 5, "body_type": 6, "color": 7, "region": 7
+    }
+    return attr_to_action.get(question_attr, 0)
+
+
+def get_action_name(action_type: str, detail: str = "") -> str:
+    """액션 타입을 사람이 읽기 쉬운 이름으로 변환"""
+    action_names = {
+        "usage": "용도 질문",
+        "fuel_type": "연료타입 질문",
+        "family_size": "가족구성원 질문",
+        "budget": "예산 질문",
+        "priority": "우선순위 질문",
+        "size": "크기 질문",
+        "body_type": "차체타입 질문",
+        "color": "컬러 질문",
+        "region": "지역 질문",
+        "recommend": "차량 추천",
+        "schedule": "일정 배정",
+        "complete": "예약 완료",
+        "waiting": "대기 중"
+    }
+    name = action_names.get(action_type, action_type)
+    if detail:
+        return f"{name} ({detail})"
+    return name
+
+
+def update_rl_model(final_reward: float, terminated: bool = True):
+    """
+    에피소드 종료 시 RL 모델 업데이트
+
+    Args:
+        final_reward: 최종 보상
+        terminated: 정상 종료 여부
+    """
+    if phase1_agent is None or len(st.session_state.trajectory) == 0:
+        return
+
+    trajectory = st.session_state.trajectory
+
+    # Trajectory의 각 스텝에 대해 Q-Learning 업데이트
+    for i, (obs, action, step_reward) in enumerate(trajectory):
+        if i < len(trajectory) - 1:
+            next_obs = trajectory[i + 1][0]
+            phase1_agent.update(obs, action, step_reward, next_obs, False, False)
+        else:
+            # 마지막 스텝: 최종 보상 포함
+            final_obs = build_observation()
+            total_step_reward = step_reward + final_reward
+            phase1_agent.update(obs, action, total_step_reward, final_obs, terminated, False)
+
+    # 에피소드 종료 처리
+    phase1_agent.end_episode()
+
+    # 모델 저장 (매 에피소드마다)
+    save_model()
+
+
+def save_model():
+    """학습된 모델 저장"""
+    if phase1_agent is None:
+        return
+
+    checkpoint_path = project_root / "checkpoints" / "chatbot" / "chatbot_q_learning.json"
+    checkpoint_path.parent.mkdir(parents=True, exist_ok=True)
+    phase1_agent.save(str(checkpoint_path))
+
+
+def record_trajectory(action: int, reward: float):
+    """현재 상태와 액션을 trajectory에 기록"""
+    obs = build_observation()
+    st.session_state.trajectory.append((obs.copy(), action, reward))
+
 
 # ============================================================================
 # 헤더
@@ -163,20 +307,50 @@ phase_text = {
     "complete": "✅ 예약 완료"
 }.get(st.session_state.phase, "")
 
+# Reward 색상 (양수: 초록, 음수: 빨강, 0: 회색)
+reward = st.session_state.reward
+if reward > 0:
+    reward_color = "#16A34A"
+    reward_bg = "#DCFCE7"
+elif reward < 0:
+    reward_color = "#DC2626"
+    reward_bg = "#FEE2E2"
+else:
+    reward_color = "#6B7280"
+    reward_bg = "#F3F4F6"
+
+# 모델 통계
+episode_count = phase1_agent.episode_count if phase1_agent else 0
+q_table_size = len(phase1_agent.q_table) if phase1_agent else 0
+
+# 현재 Action
+current_action = st.session_state.current_action
+
 st.markdown(f"""
 <div class="layered-card" style="padding: 1.2rem;">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
         <h3 style="color: #002C5F; margin: 0; font-size: 1.1rem; font-weight: 600;">👋 안녕하세요!</h3>
         <div>
             <span class="status-badge">{status_text}</span>
             <span class="status-badge">{phase_text}</span>
         </div>
     </div>
-    <div style="color: #555; font-size: 0.9rem; line-height: 1.8;">
-        <p style="margin: 0 0 0.6rem 0;">Brand 차 시승 예약 도우미입니다.</p>
-        <p style="margin: 0 0 0.6rem 0;">몇 가지 질문을 통해 고객님께 딱 맞는 차량을 추천해 드리겠습니다.</p>
-        <p style="margin: 0; color: #002C5F; font-weight: 500;">준비되셨으면 아래 <strong>'시작'</strong> 버튼을 눌러주세요!</p>
+    <p style="color: #555; font-size: 0.85rem; margin: 0 0 0.8rem 0; text-align: center;">Brand 차 시승 예약 도우미입니다.</p>
+    <div style="display: flex; gap: 0.5rem; margin-bottom: 0.8rem;">
+        <div style="flex: 1; background: #FEF3C7; border-radius: 12px; padding: 0.5rem 0.8rem; display: flex; justify-content: space-between; align-items: center;">
+            <span style="color: #92400E; font-size: 0.75rem; font-weight: 500;">🎯 Action</span>
+            <span style="color: #B45309; font-size: 0.85rem; font-weight: 600;">{current_action}</span>
+        </div>
+        <div style="flex: 1; background: {reward_bg}; border-radius: 12px; padding: 0.5rem 0.8rem; display: flex; justify-content: space-between; align-items: center;">
+            <span style="color: #374151; font-size: 0.75rem; font-weight: 500;">🏆 Reward</span>
+            <span style="color: {reward_color}; font-size: 1rem; font-weight: 700;">{reward:+.1f}</span>
+        </div>
     </div>
+    <div style="background: #EFF6FF; border-radius: 12px; padding: 0.5rem 1rem; margin-bottom: 0.5rem; display: flex; justify-content: space-around; align-items: center;">
+        <span style="color: #3B82F6; font-size: 0.75rem; font-weight: 500;">📊 Episodes: {episode_count}</span>
+        <span style="color: #3B82F6; font-size: 0.75rem; font-weight: 500;">🧠 Q-states: {q_table_size}</span>
+    </div>
+    <p style="margin: 0; color: #6B7280; font-size: 0.75rem; text-align: center;">추가질문 -1 | 다른차량 -5 | 예약확정 +15</p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -290,6 +464,9 @@ with chat_container:
 
 # 인사 단계
 if st.session_state.phase == "greeting":
+    # 현재 Action: 대기 중
+    st.session_state.current_action = get_action_name("waiting")
+
     if st.button("🚀 시작하기", type="secondary"):
         st.session_state.phase = "questioning"
         st.session_state.chat_history.append({"role": "user", "content": "시작할게요!"})
@@ -300,16 +477,32 @@ elif st.session_state.phase == "questioning":
     # 아직 질문할 게 있는지 확인
     remaining_questions = [q for q in questions if q["id"] not in st.session_state.questions_asked]
 
-    if len(st.session_state.questions_asked) >= 3 or len(remaining_questions) == 0:
-        # 충분한 정보 수집 → 추천 단계로
+    # 필수 질문 목록 (처음 3개 + 지역 질문)
+    required_attributes = ["usage", "fuel_type", "family_size", "region"]
+    required_questions = [q for q in questions if q.get("attribute") in required_attributes]
+    required_asked = [q for q in required_questions if q["id"] in st.session_state.questions_asked]
+
+    # 모든 질문 완료 또는 남은 질문 없음 → 추천 단계로
+    if len(remaining_questions) == 0:
         st.session_state.phase = "recommending"
         st.rerun()
     else:
-        # 다음 질문 선택 (에이전트 사용 또는 순차)
+        # 다음 질문 선택
         if st.session_state.current_question_idx is None:
-            # 아직 안 한 질문 중 첫 번째 선택
-            next_q = remaining_questions[0]
+            # 필수 질문 중 아직 안 한 것 우선
+            remaining_required = [q for q in remaining_questions if q.get("attribute") in required_attributes]
+
+            if len(remaining_required) > 0:
+                next_q = remaining_required[0]
+            else:
+                # 필수 질문 완료, 나머지 질문 진행
+                next_q = remaining_questions[0]
+
             st.session_state.current_question_idx = next_q["id"]
+
+            # 현재 Action 업데이트
+            question_attr = next_q.get("attribute", "")
+            st.session_state.current_action = get_action_name(question_attr)
 
             # 질문 메시지 추가
             q_msg = f"**{next_q['text']}**"
@@ -319,10 +512,15 @@ elif st.session_state.phase == "questioning":
         # 현재 질문에 대한 옵션 버튼 표시
         current_q = questions[st.session_state.current_question_idx]
 
+        # 필수 질문 4개 완료 후 스킵 버튼 표시
+        show_skip_btn = len(required_asked) >= 4
+
         st.markdown("##### 답변을 선택해주세요:")
 
-        # 버튼들 가로 배치
-        cols = st.columns(len(current_q["options"]))
+        # 버튼들 가로 배치 (스킵 버튼 포함)
+        num_cols = len(current_q["options"]) + (1 if show_skip_btn else 0)
+        cols = st.columns(num_cols)
+
         for i, option in enumerate(current_q["options"]):
             with cols[i]:
                 if st.button(option, key=f"opt_{current_q['id']}_{i}", type="secondary"):
@@ -330,6 +528,17 @@ elif st.session_state.phase == "questioning":
                     st.session_state.answers[current_q["attribute"]] = option
                     st.session_state.questions_asked.append(current_q["id"])
                     st.session_state.current_question_idx = None
+
+                    # Reward 감소 (필수 4개 질문 이후 추가 질문만 -1)
+                    is_required_question = current_q.get("attribute") in required_attributes
+                    step_reward = 0.0
+                    if not is_required_question:
+                        st.session_state.reward -= 1.0
+                        step_reward = -1.0
+
+                    # RL Trajectory 기록
+                    action = get_action_for_question(current_q.get("attribute", ""))
+                    record_trajectory(action, step_reward)
 
                     # 사용자 응답 추가
                     st.session_state.chat_history.append({"role": "user", "content": option})
@@ -340,8 +549,19 @@ elif st.session_state.phase == "questioning":
 
                     st.rerun()
 
+        # "바로 추천" 스킵 버튼 (필수 4개 질문 완료 후 표시)
+        if show_skip_btn:
+            with cols[-1]:
+                if st.button("✅ 바로 추천!", key="skip_btn", type="secondary"):
+                    st.session_state.chat_history.append({"role": "user", "content": "바로 추천해주세요!"})
+                    st.session_state.phase = "recommending"
+                    st.rerun()
+
 # 추천 단계
 elif st.session_state.phase == "recommending":
+    # 현재 Action 업데이트
+    st.session_state.current_action = get_action_name("recommend")
+
     if st.session_state.recommended_vehicle is None:
         # 차량 추천 수행 (이미 추천한 차량 제외)
         recommended = get_vehicle_recommendation(
@@ -384,13 +604,34 @@ elif st.session_state.phase == "recommending":
     with col2:
         if st.button("🔄 다른 차량 보기", use_container_width=True):
             st.session_state.chat_history.append({"role": "user", "content": "다른 차량도 보고 싶어요"})
+            # Reward 감소 (다른 차량 요청 -5)
+            st.session_state.reward -= 5.0
+            # 현재 Action 업데이트 (다른 차량 추천 중)
+            st.session_state.current_action = "다른 차량 탐색"
             # 다른 차량 추천 로직 (간단히 처리)
             st.session_state.recommended_vehicle = None
             st.rerun()
 
 # 스케줄링 단계
 elif st.session_state.phase == "scheduling":
+    # 현재 Action 업데이트
+    st.session_state.current_action = get_action_name("schedule")
+
+    # 지역 기반 시승센터 매핑
+    center_map = {
+        "강남/서초": "강남 시승센터 (서울 강남구 테헤란로 152)",
+        "송파/강동": "송파 시승센터 (서울 송파구 올림픽로 300)",
+        "영등포/마포": "영등포 시승센터 (서울 영등포구 여의대로 108)",
+        "성동/광진": "성수 시승센터 (서울 성동구 왕십리로 50)"
+    }
+
+    # 사용자가 선택한 지역에 해당하는 시승센터 추천
+    selected_region = st.session_state.answers.get("region", "강남/서초")
+    recommended_center = center_map.get(selected_region, center_map["강남/서초"])
+
     schedule_msg = f"""**{st.session_state.recommended_vehicle['name']}** 시승 예약을 진행합니다.
+
+📍 **추천 시승센터**: {recommended_center}
 
 원하시는 날짜와 시간을 선택해주세요."""
 
@@ -398,7 +639,7 @@ elif st.session_state.phase == "scheduling":
         st.session_state.chat_history.append({"role": "assistant", "content": schedule_msg})
         st.rerun()
 
-    # 날짜 선택
+    # 날짜/시간 선택
     col1, col2 = st.columns(2)
     with col1:
         selected_date = st.date_input(
@@ -413,6 +654,12 @@ elif st.session_state.phase == "scheduling":
         )
 
     if st.button("📅 예약 확정", use_container_width=True):
+        # Reward 증가 (예약 확정 +15)
+        st.session_state.reward += 15.0
+
+        # RL 모델 업데이트 (에피소드 종료 - 성공)
+        update_rl_model(final_reward=15.0, terminated=True)
+
         # 예약 완료
         st.session_state.chat_history.append({
             "role": "user",
@@ -431,6 +678,7 @@ elif st.session_state.phase == "scheduling":
 - 연료: {fuel_type_kr}
 - 좌석: {vehicle['seats']}인승
 - 가격대: {vehicle['price_range']['min']:,}~{vehicle['price_range']['max']:,}만원
+- 장소: {recommended_center}
 - 날짜: {selected_date.strftime('%Y년 %m월 %d일')}
 - 시간: {selected_time}
 
@@ -443,6 +691,9 @@ elif st.session_state.phase == "scheduling":
 
 # 완료 단계
 elif st.session_state.phase == "complete":
+    # 현재 Action 업데이트
+    st.session_state.current_action = get_action_name("complete")
+
     st.toast("🎉 시승 예약이 완료되었습니다!", icon="✅")
 
     if st.button("🔄 새로운 상담 시작", use_container_width=True):
@@ -461,5 +712,9 @@ with st.sidebar:
         "phase": st.session_state.phase,
         "answers": st.session_state.answers,
         "questions_asked": st.session_state.questions_asked,
-        "model_loaded": model_loaded
+        "model_loaded": model_loaded,
+        "trajectory_length": len(st.session_state.trajectory),
+        "reward": st.session_state.reward,
+        "episode_count": phase1_agent.episode_count if phase1_agent else 0,
+        "q_table_size": len(phase1_agent.q_table) if phase1_agent else 0
     })

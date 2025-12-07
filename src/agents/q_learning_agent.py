@@ -451,7 +451,7 @@ if __name__ == "__main__":
     print(f"Q-table 크기: {results['q_table_size']} 상태")
 
     # 모델 저장
-    save_path = Path(__file__).parent.parent.parent / "checkpoints" / "q_learning_model.json"
+    save_path = Path(__file__).parent.parent.parent / "checkpoints" / "standalone" / "q_learning_model.json"
     save_path.parent.mkdir(parents=True, exist_ok=True)
     agent.save(str(save_path))
     print(f"\n모델 저장: {save_path}")

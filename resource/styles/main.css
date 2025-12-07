@@ -249,3 +249,26 @@ button[data-testid="stBaseButton-secondary"]:hover {
         flex: 0 0 auto !important;
     }
 }
+
+/* Toast 알림 가운데 정렬 */
+.stToast {
+    position: fixed !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    bottom: 1rem !important;
+}
+
+[data-testid="stToast"] {
+    position: fixed !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+}
+
+div[data-baseweb="toast"] {
+    position: fixed !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+}
