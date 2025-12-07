@@ -1,13 +1,13 @@
 """
 Streamlit Cloud 진입점
-프로젝트 루트에서 실행되어 모듈 임포트 문제 해결
+src 폴더에서 실행되어 모듈 임포트 문제 해결
 """
 import sys
 import runpy
 from pathlib import Path
 
-# 프로젝트 루트를 sys.path에 추가
-project_root = Path(__file__).parent.resolve()
+# 프로젝트 루트를 sys.path에 추가 (src의 부모 폴더)
+project_root = Path(__file__).parent.parent.resolve()
 if str(project_root) not in sys.path:
     sys.path.insert(0, str(project_root))
 

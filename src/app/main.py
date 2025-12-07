@@ -9,6 +9,7 @@ Hyundai Test Drive Reservation Chatbot
 import streamlit as st
 import json
 import sys
+import random
 from pathlib import Path
 from datetime import datetime, timedelta
 import numpy as np
@@ -607,7 +608,6 @@ elif st.session_state.phase == "questioning":
 
                     # Policy 모드 결정 (ε-greedy)
                     if phase1_agent and phase1_agent.epsilon > 0:
-                        import random
                         if random.random() < phase1_agent.epsilon:
                             st.session_state.policy_mode = "탐험"
                         else:
