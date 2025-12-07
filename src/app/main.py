@@ -786,29 +786,50 @@ elif st.session_state.phase == "scheduling":
 
     # === Step 1: 요일 선택 ===
     if st.session_state.scheduling_step == "select_day":
-        if not any("시승 예약을 진행" in c["content"] for c in st.session_state.chat_history):
+        # 요일 선택 메시지가 없으면 추가 (rerun 없이)
+        day_msg_exists = any("시승 예약을 진행" in c.get("content", "") for c in st.session_state.chat_history)
+        if not day_msg_exists:
             schedule_msg = f"""**{st.session_state.recommended_vehicle['name']}** 시승 예약을 진행함.
 
 📍 **시승센터**: {center_info['name']} ({center_info['address']})
 
-원하시는 **요일**을 선택해주세요."""
+원하시는 요일을 선택해주세요."""
             st.session_state.chat_history.append({"role": "assistant", "content": schedule_msg})
-            st.rerun()
 
         st.markdown("##### 원하시는 요일을 선택해주세요:")
-        cols = st.columns(4)
-        for i, label in enumerate(day_type_labels):
-            with cols[i]:
-                if st.button(label, key=f"day_{i}", use_container_width=True):
-                    st.session_state.preferred_day_type = i
-                    st.session_state.chat_history.append({"role": "user", "content": label})
-                    st.session_state.scheduling_step = "select_time"
-                    st.rerun()
+        col1, col2, col3, col4 = st.columns(4)
+        with col1:
+            if st.button(day_type_labels[0], key="day_0", use_container_width=True):
+                st.session_state.preferred_day_type = 0
+                st.session_state.chat_history.append({"role": "user", "content": day_type_labels[0]})
+                st.session_state.scheduling_step = "select_time"
+                st.rerun()
+        with col2:
+            if st.button(day_type_labels[1], key="day_1", use_container_width=True):
+                st.session_state.preferred_day_type = 1
+                st.session_state.chat_history.append({"role": "user", "content": day_type_labels[1]})
+                st.session_state.scheduling_step = "select_time"
+                st.rerun()
+        with col3:
+            if st.button(day_type_labels[2], key="day_2", use_container_width=True):
+                st.session_state.preferred_day_type = 2
+                st.session_state.chat_history.append({"role": "user", "content": day_type_labels[2]})
+                st.session_state.scheduling_step = "select_time"
+                st.rerun()
+        with col4:
+            if st.button(day_type_labels[3], key="day_3", use_container_width=True):
+                st.session_state.preferred_day_type = 3
+                st.session_state.chat_history.append({"role": "user", "content": day_type_labels[3]})
+                st.session_state.scheduling_step = "select_time"
+                st.rerun()
 
     # === Step 2: 시간대 선택 ===
     elif st.session_state.scheduling_step == "select_time":
-        if not any("시간대를 선택" in c["content"] for c in st.session_state.chat_history):
-            time_msg = "원하시는 **시간대**를 선택해주세요."
+        # 시간대 선택 메시지가 없으면 추가
+        time_msg_exists = any("시간대" in c.get("content", "") and c.get("role") == "assistant"
+                              for c in st.session_state.chat_history[-3:])  # 최근 3개만 체크
+        if not time_msg_exists:
+            time_msg = "원하시는 시간대를 선택해주세요."
             st.session_state.chat_history.append({"role": "assistant", "content": time_msg})
             st.rerun()
 
@@ -859,45 +880,70 @@ elif st.session_state.phase == "scheduling":
 
             recommended_time = time_slots[slot_idx]
 
-            # DQN 에이전트로 최적 슬롯 분석 (실제 환경에서는 phase2_env 사용)
-            dqn_action = 0  # 기본: 예약 확정
+            # DQN 에이전트로 최적 슬롯 분석
+            # 평일(day_type 0, 2): 예약 가능 확률 높음 (80%)
+            # 주말(day_type 1, 3): 예약 가능 확률 낮음 (20%) → 평일 유도
+            is_weekday = day_type in [0, 2]  # 이번주/다음주 평일
+            availability_prob = 0.8 if is_weekday else 0.2
+
+            dqn_action = 0  # 기본: 예약 확정 (슬롯 사용 가능)
             if phase2_agent is not None:
                 try:
-                    # 환경 초기화 및 observation 생성
+                    # 환경 초기화 - 평일은 예약 적게, 주말은 예약 많게 설정
+                    prefill_ratio = 0.3 if is_weekday else 0.8
                     obs, _ = phase2_env.reset(options={
                         'vehicle_id': st.session_state.recommended_vehicle.get('id', 'avante'),
-                        'prefill_ratio': 0.5
+                        'prefill_ratio': prefill_ratio
                     })
                     dqn_action = phase2_agent.select_action(obs, training=False)
+
+                    # DQN 결과와 확률 기반 가용성 결합
+                    if random.random() > availability_prob:
+                        dqn_action = 1  # 대안 제시 (슬롯 불가)
+                    elif is_weekday:
+                        dqn_action = 0  # 평일은 높은 확률로 확정
                 except Exception:
-                    dqn_action = 0  # 에러 시 기본값
+                    # 에러 시 확률 기반으로 결정
+                    dqn_action = 0 if random.random() < availability_prob else 1
+            else:
+                # 에이전트 없을 때 확률 기반으로 결정
+                dqn_action = 0 if random.random() < availability_prob else 1
 
             # 추천 결과 저장
+            slot_available = (dqn_action == 0)  # 슬롯 사용 가능 여부
             st.session_state.dqn_recommendation = {
                 "date": target_date,
                 "time": recommended_time,
                 "slot_idx": slot_idx,
                 "day_type": day_type,
                 "dqn_action": dqn_action,
-                "center": center_info
+                "center": center_info,
+                "is_weekday": is_weekday,
+                "slot_available": slot_available  # 예약 가능 여부
             }
 
             # DQN 분석 결과 메시지
             day_name = ["월", "화", "수", "목", "금", "토", "일"][target_date.weekday()]
             if dqn_action == 0:
+                # 슬롯 사용 가능 - 바로 예약 진행
+                slot_type = "평일" if is_weekday else "주말"
                 analysis_msg = f"""🤖 **DQN 분석 완료**
 
-선호하신 시간대를 분석한 결과, 다음 일정을 추천드림:
+선호하신 {slot_type} 시간대를 분석한 결과, 예약 가능한 슬롯을 찾았음:
 
 📅 **{target_date.strftime('%Y년 %m월 %d일')} ({day_name})** {recommended_time}
 📍 {center_info['name']}
+🚗 예상 대기시간: 없음
 
 이 시간에 예약하시겠습니까?"""
             else:
-                # 대안 제시
+                # 대안 제시 - 주말인 경우 평일 유도
                 alt_time = time_slots[min(slot_idx + 1, 8)]
                 st.session_state.dqn_recommendation["alt_time"] = alt_time
-                analysis_msg = f"""🤖 **DQN 분석 완료**
+
+                if is_weekday:
+                    # 평일인데 예약 불가 → 다른 시간대 제안
+                    analysis_msg = f"""🤖 **DQN 분석 완료**
 
 선호하신 시간대({recommended_time})는 예약이 많습니다.
 
@@ -905,18 +951,48 @@ elif st.session_state.phase == "scheduling":
 📍 {center_info['name']}
 
 대안 시간으로 예약하시겠습니까?"""
+                else:
+                    # 주말 선택 → 평일 유도
+                    analysis_msg = f"""🤖 **DQN 분석 완료**
+
+⚠️ 주말({target_date.strftime('%m/%d')} {day_name})은 시승 예약이 집중되어 대기시간이 길어질 수 있습니다.
+
+💡 **평일 예약 시 혜택**:
+- 대기시간 최소화 (평균 5분 이내)
+- 전담 상담사 배정
+- 충분한 시승 시간 확보
+
+현재 시간({recommended_time})으로 예약하시거나, '다른 시간' 버튼으로 평일을 선택해보세요.
+
+📅 {target_date.strftime('%Y년 %m월 %d일')} ({day_name}) {recommended_time}
+📍 {center_info['name']}"""
 
             st.session_state.chat_history.append({"role": "assistant", "content": analysis_msg})
             st.rerun()
 
         # 예약 확정/거절 버튼
         rec = st.session_state.dqn_recommendation
+        slot_available = rec.get("slot_available", True)
+
         col1, col2 = st.columns(2)
         with col1:
-            if st.button("✅ 예약 확정", use_container_width=True):
-                st.session_state.scheduling_step = "confirm"
-                st.session_state.chat_history.append({"role": "user", "content": "예약 확정할게요!"})
-                st.rerun()
+            # 슬롯 불가 시 버튼 비활성화 스타일 또는 경고
+            if slot_available:
+                if st.button("✅ 예약 확정", use_container_width=True):
+                    st.session_state.scheduling_step = "confirm"
+                    st.session_state.chat_history.append({"role": "user", "content": "예약 확정할게요!"})
+                    st.rerun()
+            else:
+                # 주말이고 슬롯 불가 → 예약 확정 불가
+                if st.button("❌ 예약 불가", use_container_width=True, disabled=False):
+                    # 클릭 시 경고 메시지 표시
+                    warning_msg = """⚠️ **죄송합니다. 해당 시간대는 예약이 마감되었습니다.**
+
+주말은 시승 예약이 집중되어 빠르게 마감됩니다.
+**평일 예약**을 권장드립니다. '다른 시간' 버튼을 눌러 평일을 선택해주세요."""
+                    st.session_state.chat_history.append({"role": "assistant", "content": warning_msg})
+                    st.session_state.reward -= 1.0  # 불가 슬롯 시도 패널티
+                    st.rerun()
         with col2:
             if st.button("🔄 다른 시간", use_container_width=True):
                 st.session_state.scheduling_attempts += 1
