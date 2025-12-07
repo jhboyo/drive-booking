@@ -1,6 +1,3 @@
-# Local package install (for module imports)
-.
-
 # RL Environment
 gymnasium>=0.29.0
 
