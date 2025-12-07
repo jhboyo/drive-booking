@@ -20,11 +20,11 @@ wheels/
 .installed.cfg
 *.egg
 
-# Virtual environments
-venv/
-env/
-.venv/
-.env/
+# Virtual environments (루트 폴더만 무시, src/env는 유지)
+/venv/
+/env/
+/.venv/
+/.env/
 
 # IDE
 .idea/
