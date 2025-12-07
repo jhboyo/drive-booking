@@ -101,12 +101,14 @@ uv run streamlit run src/app/main.py
 > 🎯 **모바일 앱 특징**: 터치 기반 인터페이스, 반응형 디자인, 실시간 MDP 상태 시각화
 
 <p align="center">
-  <img src="./docs/chat/chat1.png" width="260" height="520" style="border: 12px solid #1a1a1a; border-radius: 44px; margin: 10px; box-shadow: 0 20px 60px rgba(0,0,0,0.3), inset 0 0 0 2px #333; object-fit: cover; object-position: left top;" alt="시작 화면"/>
-  <img src="./docs/chat/chat2.png" width="260" height="520" style="border: 12px solid #1a1a1a; border-radius: 44px; margin: 10px; box-shadow: 0 20px 60px rgba(0,0,0,0.3), inset 0 0 0 2px #333; object-fit: cover; object-position: top;" alt="질문 단계"/>
+  <img src="./docs/chat/chat1.png" width="240" height="500" alt="시작 화면"/>
+  &nbsp;&nbsp;
+  <img src="./docs/chat/chat2.png" width="240" height="500" alt="질문 단계"/>
 </p>
 <p align="center">
-  <img src="./docs/chat/chat3.png" width="260" height="520" style="border: 12px solid #1a1a1a; border-radius: 44px; margin: 10px; box-shadow: 0 20px 60px rgba(0,0,0,0.3), inset 0 0 0 2px #333; object-fit: cover; object-position: top;" alt="추천 결과"/>
-  <img src="./docs/chat/chat4.png" width="260" height="520" style="border: 12px solid #1a1a1a; border-radius: 44px; margin: 10px; box-shadow: 0 20px 60px rgba(0,0,0,0.3), inset 0 0 0 2px #333; object-fit: cover; object-position: top;" alt="예약 완료"/>
+  <img src="./docs/chat/chat3.png" width="240" height="500" alt="추천 결과"/>
+  &nbsp;&nbsp;
+  <img src="./docs/chat/chat4.png" width="240" height="500" alt="예약 완료"/>
 </p>
 
 | 단계 | 화면 | 설명 |
