@@ -96,8 +96,12 @@ def load_questions():
 @st.cache_data
 def load_vehicles():
     """차량 데이터 로드"""
-    with open(project_root / "data" / "vehicles.json", "r", encoding="utf-8") as f:
-        return json.load(f)["vehicles"]
+    try:
+        with open(project_root / "data" / "vehicles.json", "r", encoding="utf-8") as f:
+            return json.load(f)["vehicles"]
+    except Exception as e:
+        st.error(f"차량 데이터 로드 실패: {e}")
+        return []
 
 # ============================================================================
 # 에이전트 로드
@@ -345,6 +349,12 @@ st.markdown("""
 questions = load_questions()
 vehicles = load_vehicles()
 phase1_agent, phase1_env, model_loaded = load_agents()
+
+# 데이터 로드 확인
+if len(questions) == 0:
+    st.error(f"질문 데이터가 비어있음! project_root: {project_root}")
+if len(vehicles) == 0:
+    st.error(f"차량 데이터가 비어있음! project_root: {project_root}")
 
 # 레이어드 카드 - 상태 표시
 status_text = "🧠 Q-Learning 기반" if model_loaded else "🧠 강화학습 모델"
@@ -596,8 +606,11 @@ elif st.session_state.phase == "questioning":
             st.session_state.chat_history.append({"role": "assistant", "content": q_msg})
             st.rerun()
 
-        # 현재 질문에 대한 옵션 버튼 표시
-        current_q = questions[st.session_state.current_question_idx]
+        # 현재 질문에 대한 옵션 버튼 표시 (id로 질문 찾기)
+        current_q = next((q for q in questions if q["id"] == st.session_state.current_question_idx), None)
+        if current_q is None:
+            st.error(f"질문을 찾을 수 없음: id={st.session_state.current_question_idx}")
+            st.stop()
 
         # 필수 질문 4개 완료 후 스킵 버튼 표시
         show_skip_btn = len(required_asked) >= 4
