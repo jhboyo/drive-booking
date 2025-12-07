@@ -3,7 +3,7 @@ name = "driving-test"
 version = "0.1.0"
 description = "강화학습 기반 자동차 시승 예약 통합 시스템"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.10"
 dependencies = [
     "gymnasium>=0.29.0",
     "torch>=2.0.0",
@@ -14,3 +14,7 @@ dependencies = [
     "tqdm>=4.65.0",
     "streamlit>=1.28.0",
 ]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]

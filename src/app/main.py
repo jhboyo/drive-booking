@@ -13,9 +13,30 @@ from pathlib import Path
 from datetime import datetime, timedelta
 import numpy as np
 
-# 프로젝트 루트 경로 설정
-project_root = Path(__file__).parent.parent.parent
-sys.path.insert(0, str(project_root))
+# 프로젝트 루트 경로 설정 (로컬/Streamlit Cloud 호환)
+def get_project_root() -> Path:
+    """프로젝트 루트 경로 반환 (다양한 실행 환경 지원)"""
+    # 방법 1: __file__ 기반 (로컬 실행)
+    if '__file__' in globals():
+        return Path(__file__).resolve().parent.parent.parent
+
+    # 방법 2: 현재 작업 디렉토리에서 src 폴더 탐색
+    cwd = Path.cwd()
+    if (cwd / 'src').is_dir():
+        return cwd
+
+    # 방법 3: sys.path에서 src 폴더가 있는 경로 탐색
+    for p in sys.path:
+        path = Path(p)
+        if (path / 'src').is_dir():
+            return path
+
+    # 기본값
+    return cwd
+
+project_root = get_project_root()
+if str(project_root) not in sys.path:
+    sys.path.insert(0, str(project_root))
 
 # 에이전트 및 환경 임포트
 from src.agents.q_learning_agent import QLearningAgent
