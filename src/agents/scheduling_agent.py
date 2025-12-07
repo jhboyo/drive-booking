@@ -474,8 +474,8 @@ class DQNAgent:
         Args:
             path: 로드할 파일 경로 (.pth 파일)
         """
-        # 체크포인트 로드
-        checkpoint = torch.load(path, map_location=self.device)
+        # 체크포인트 로드 (PyTorch 2.6+ 호환)
+        checkpoint = torch.load(path, map_location=self.device, weights_only=False)
 
         # 네트워크 가중치 복원
         self.q_network.load_state_dict(checkpoint['q_network'])
