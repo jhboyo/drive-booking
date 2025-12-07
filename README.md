@@ -2,6 +2,61 @@
 
 > **Interactive Conversational Recommendation System using Reinforcement Learning**
 
+---
+
+## 🎯 실행 결과 (Chatbot Demo)
+
+### 대화형 추천 시스템 UI
+
+학습된 Q-Learning 모델을 Streamlit 기반 챗봇 UI와 연동하여 실시간 대화형 추천 시스템을 구현함.
+
+#### 시스템 시작 화면
+![시작 화면](./docs/chat/01_start.png)
+- MDP 상태 시각화: Action, Reward, State, ε, Step, Policy
+- Q-Learning 모델 통계: Episodes, Q-states 실시간 표시
+
+#### 질문 기반 선호도 수집
+![질문 단계](./docs/chat/02_questioning.png)
+- 필수 질문 4개: 용도, 연료타입, 가족구성원, 지역
+- 추가 질문 시 Reward -1 적용
+- ε-greedy Policy 표시 (탐험/활용)
+
+#### 차량 추천 결과
+![추천 결과](./docs/chat/03_recommendation.png)
+- 고객 응답 기반 최적 차량 추천
+- 차량 상세 정보 표시 (차종, 연료, 좌석, 가격대)
+- "다른 차량 보기" 선택 시 Reward -5
+
+#### 시승 예약 완료
+![예약 완료](./docs/chat/04_complete.png)
+- 지역 기반 시승센터 자동 매칭
+- 예약 확정 시 Reward +15
+- RL 모델 자동 업데이트 (5 에피소드마다 동기화)
+
+### MDP 시각화 요소
+
+| 요소 | 설명 | 표시 예시 |
+|------|------|-----------|
+| 🎯 **Action** | 현재 수행 중인 행동 | 용도 질문, 차량 추천, 예약 완료 |
+| 🏆 **Reward** | 누적 보상 | +15.0 (예약 성공 시) |
+| 📋 **State** | 질문 진행률 | 4/8 (4개 질문 완료) |
+| 🎲 **ε** | 탐험률 | 0.05 (학습 후) |
+| 👣 **Step** | 에피소드 스텝 | 6 |
+| 🔍/🎯 **Policy** | 탐험/활용 모드 | 활용 (Q값 기반 선택) |
+
+### 핵심 성과
+
+| 지표 | 결과 |
+|------|------|
+| **평균 질문 수** | 4개 (필수) + α (선택) |
+| **예약 완료 Reward** | +15.0 |
+| **모델 동기화** | 5 에피소드마다 자동 저장 |
+| **실시간 학습** | 챗봇 사용 시 Q-table 업데이트 |
+
+> 📍 **스크린샷 저장 위치**: `docs/chat/` 폴더에 이미지 추가 필요
+
+---
+
 ## 💡 연구 동기
 
 ### "20 Questions" 게임에서 업무 도메인으로
