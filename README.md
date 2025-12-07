@@ -6,9 +6,9 @@
 
 ## 💡 연구 동기
 
-### "20 Questions" 게임에서 업무 도메인으로
+### "20 Questions" 게임에서 자동차 업무 도메인으로
 
-본 프로젝트는 EMNLP 2018에 발표된 **"Playing 20 Question Game with Policy-Based Reinforcement Learning"** (Hu et al., 2018) 논문에서 영감을 받아, 학술적 게임 환경의 강화학습 기법을 **실제 업무 도메인에 적용**한 연구임.
+본 프로젝트는 EMNLP 2018에 발표된 **"Playing 20 Question Game with Policy-Based Reinforcement Learning"** (Hu et al., 2018)[arXiv:1808.07645](https://arxiv.org/abs/1808.07645) 논문에서 영감을 받아, 학술적 게임 환경의 강화학습 기법을 **실제 자동차 업무 도메인에 적용**한 연구임.
 
 #### 원 논문의 핵심 아이디어
 
@@ -26,18 +26,16 @@
 |------|-------------------|-------------------------------|
 | **환경** | 게임 환경 | 실제 업무 환경 (차량 DB, 센터 스케줄) |
 | **목표** | 물체 맞추기 | 최적 차량 추천 + 일정 배정 |
-| **질문 수** | 최대 20개 | **최대 5개** (효율성 강조) |
+| **질문 수** | 최대 20개 | **필수 4개 + 선택 4개** (효율성 강조) |
 | **보상** | 정답 여부 | 고객 만족도 + 예약 성사 - 질문 수 |
-| **확장** | 단일 Phase | **Two-Phase** (추천 + 스케줄링) |
+| **확장** | 단일 Phase(파이프라인) | **Two-Phase** (차량 추천 + 일정 스케줄링) |
 
 #### 연구적 기여
 
 1. **도메인 적용**: 학술적 게임 환경 → 실제 비즈니스 프로세스
-2. **효율성 강화**: 20개 질문 → **3개 이하 질문**으로 목표 달성
+2. **효율성 강화**: 20개 질문 → **필수 4개 질문 + 선택 4개 질문**으로 목표 달성
 3. **파이프라인 확장**: 정보 수집 → 추천 → **스케줄링까지 End-to-End 통합**
 4. **시너지 최적화**: Phase 간 협업 효과를 Synergy Bonus로 정량화
-
-> 📄 **참고 논문**: Hu, H., Wu, X., Luo, B., Tao, C., Xu, C., Wu, W., & Chen, Z. (2018). Playing 20 Question Game with Policy-Based Reinforcement Learning. *EMNLP 2018*. [arXiv:1808.07645](https://arxiv.org/abs/1808.07645)
 
 ---
 
@@ -50,10 +48,12 @@
 > 🎯 **모바일 앱 특징**: 터치 기반 인터페이스, 반응형 디자인, 실시간 MDP 상태 시각화
 
 <p align="center">
-  <img src="./docs/chat/chat1.png" width="220" height="450" style="border: 8px solid #333; border-radius: 20px; margin: 5px; object-fit: cover; object-position: center top;" alt="시작 화면"/>
-  <img src="./docs/chat/chat2.png" width="220" height="450" style="border: 8px solid #333; border-radius: 20px; margin: 5px; object-fit: cover; object-position: center top;" alt="질문 단계"/>
-  <img src="./docs/chat/chat3.png" width="220" height="450" style="border: 8px solid #333; border-radius: 20px; margin: 5px; object-fit: cover; object-position: center top;" alt="추천 결과"/>
-  <img src="./docs/chat/chat4.png" width="220" height="450" style="border: 8px solid #333; border-radius: 20px; margin: 5px; object-fit: cover; object-position: center top;" alt="예약 완료"/>
+  <img src="./docs/chat/chat1.png" width="280" height="500" style="border: 8px solid #333; border-radius: 20px; margin: 8px; object-fit: cover; object-position: left top;" alt="시작 화면"/>
+  <img src="./docs/chat/chat2.png" width="280" height="500" style="border: 8px solid #333; border-radius: 20px; margin: 8px; object-fit: cover; object-position: top;" alt="질문 단계"/>
+</p>
+<p align="center">
+  <img src="./docs/chat/chat3.png" width="280" height="500" style="border: 8px solid #333; border-radius: 20px; margin: 8px; object-fit: cover; object-position: top;" alt="추천 결과"/>
+  <img src="./docs/chat/chat4.png" width="280" height="500" style="border: 8px solid #333; border-radius: 20px; margin: 8px; object-fit: cover; object-position: top;" alt="예약 완료"/>
 </p>
 
 | 단계 | 화면 | 설명 |
@@ -162,7 +162,7 @@ AS-IS: 고객이 모든 것을 직접 선택 (5~7단계)
 TO-BE: AI가 최소 질문으로 추천 + 최적 일정 자동 배정 (2단계)
 ```
 
-- **Phase 1**: 2~3개 질문만으로 최적 시승 차량 추천
+- **Phase 1**: 4개 필수 질문으로 최적 시승 차량 추천
 - **Phase 2**: 고객 선호 시간 + 센터 가용 상황 고려하여 최적 일정 자동 배정
 
 ---
@@ -687,7 +687,7 @@ uv run streamlit run src/app/main.py
 
 ### Phase 1 (차량 추천)
 - [x] 시승 차량 추천 정확도 80% 이상
-- [x] 평균 질문 수 3개 이하
+- [x] 평균 질문 수 4개 (필수)
 - [x] 베이스라인(Random, Rule-based) 대비 15% 이상 성능 향상
 
 ### Phase 2 (스케줄링)
