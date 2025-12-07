@@ -130,6 +130,7 @@ def load_agents():
         phase2_agent = DQNAgent(
             state_dim=phase2_env.observation_space.shape[0],
             action_dim=phase2_env.action_space.n,
+            hidden_dim=128,  # 체크포인트와 동일한 크기
             seed=42
         )
 
