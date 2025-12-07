@@ -113,7 +113,7 @@
       0.0,
       0.0,
       0.0,
-      0.0,
+      1.5,
       0.0,
       0.0,
       0.0,
@@ -556,9 +556,9 @@
       0.0
     ]
   },
-  "epsilon": 0.946354579813443,
-  "episode_count": 11,
-  "total_updates": 58,
+  "epsilon": 0.9416228069143757,
+  "episode_count": 12,
+  "total_updates": 62,
   "hyperparameters": {
     "learning_rate": 0.1,
     "discount_factor": 0.95,

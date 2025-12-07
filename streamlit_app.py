@@ -2,6 +2,7 @@
 Streamlit Cloud 진입점
 프로젝트 루트에서 실행되어 모듈 임포트 문제 해결
 """
+import streamlit as st
 import sys
 from pathlib import Path
 
@@ -10,7 +11,14 @@ project_root = Path(__file__).parent.resolve()
 if str(project_root) not in sys.path:
     sys.path.insert(0, str(project_root))
 
-# main.py를 패키지 모듈로 직접 import
-# importlib.util 대신 일반 import를 사용하면 Python의 정상적인
-# 모듈 해석 메커니즘이 작동하여 src.env 등을 올바르게 찾음
-from src.app import main  # noqa: F401
+st.write(f"Python version: {sys.version}")
+st.write(f"Project root: {project_root}")
+st.write(f"sys.path: {sys.path[:3]}")
+
+try:
+    from src.app import main  # noqa: F401
+    st.success("Import 성공!")
+except Exception as e:
+    st.error(f"Import 실패: {e}")
+    import traceback
+    st.code(traceback.format_exc())
