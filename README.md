@@ -2,12 +2,12 @@
 
 **Conversational Vehicle Recommendation and Scheduling System using Reinforcement Learning**
 
+
+🚀 **[실시간 데모 바로가기](https://driving-booking.streamlit.app/)**
 ---
 
 
 ## 💡 연구 동기
-
-### "20 Questions" 게임에서 자동차 업무 도메인으로
 
 본 프로젝트는 EMNLP 2018에 발표된 **"Playing 20 Question Game with Policy-Based Reinforcement Learning"** (Hu et al., 2018)[arXiv:1808.07645](https://arxiv.org/abs/1808.07645) 논문에서 영감을 받아, 학술적 게임 환경의 강화학습 기법을 **실제 자동차 업무 도메인에 적용**한 연구임.
 
@@ -71,9 +71,9 @@ TO-BE: AI가 최소 질문으로 추천 + 최적 일정 자동 배정 (2단계)
 
 ## 🚀 실행 방법
 
-### 온라인 데모 (권장)
+### 온라인 데모
 
-별도 설치 없이 바로 체험 가능: **https://drive-booking-rl.streamlit.app/**
+별도 설치 없이 바로 체험 가능: **https://driving-booking.streamlit.app/**
 
 ### 로컬 실행
 
