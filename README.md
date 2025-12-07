@@ -1,6 +1,6 @@
-# 강화학습 프로젝트: 자동차 시승 예약 통합 시스템
+# 강화학습 기반 대화형 차량 추천 및 스케줄링 시스템
 
-> **Interactive Conversational Recommendation System using Reinforcement Learning**
+> **Conversational Vehicle Recommendation and Scheduling System using Reinforcement Learning**
 
 ---
 
