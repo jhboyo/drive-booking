@@ -1,5 +1,5 @@
 """
-현대자동차 시승 예약 챗봇 - Streamlit 앱
+Brand 자동차 시승 예약 챗봇 - Streamlit 앱
 Hyundai Test Drive Reservation Chatbot
 
 학습된 강화학습 모델을 사용하여 대화형으로 차량을 추천하고
