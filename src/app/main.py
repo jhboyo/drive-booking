@@ -6,38 +6,45 @@ Hyundai Test Drive Reservation Chatbot
 시승 예약을 진행하는 챗봇 인터페이스임.
 """
 
+# =============================================================================
+# 중요: sys.path 설정을 모든 로컬 import보다 먼저 수행
+# Streamlit Cloud 배포 시 모듈 임포트 문제 방지
+# =============================================================================
+import sys
+from pathlib import Path
+
+def _setup_path():
+    """프로젝트 루트를 sys.path에 추가 (모든 import 전에 실행)"""
+    # 현재 파일 기준 프로젝트 루트 찾기: src/app/main.py -> 프로젝트 루트
+    current_file = Path(__file__).resolve()
+    project_root = current_file.parent.parent.parent
+
+    # 프로젝트 루트에 src 폴더가 있는지 확인
+    if not (project_root / 'src').is_dir():
+        # 폴백: 현재 작업 디렉토리 또는 sys.path에서 찾기
+        for candidate in [Path.cwd()] + [Path(p) for p in sys.path]:
+            if (candidate / 'src').is_dir():
+                project_root = candidate
+                break
+
+    # sys.path에 프로젝트 루트 추가
+    project_root_str = str(project_root)
+    if project_root_str not in sys.path:
+        sys.path.insert(0, project_root_str)
+
+    return project_root
+
+# 다른 import 전에 path 설정 실행
+project_root = _setup_path()
+
+# =============================================================================
+# 이제 표준 라이브러리 및 로컬 모듈 import 가능
+# =============================================================================
 import streamlit as st
 import json
-import sys
 import random
-from pathlib import Path
 from datetime import datetime, timedelta
 import numpy as np
-
-# 프로젝트 루트 경로 설정 (로컬/Streamlit Cloud 호환)
-def get_project_root() -> Path:
-    """프로젝트 루트 경로 반환 (다양한 실행 환경 지원)"""
-    # 방법 1: __file__ 기반 (로컬 실행)
-    if '__file__' in globals():
-        return Path(__file__).resolve().parent.parent.parent
-
-    # 방법 2: 현재 작업 디렉토리에서 src 폴더 탐색
-    cwd = Path.cwd()
-    if (cwd / 'src').is_dir():
-        return cwd
-
-    # 방법 3: sys.path에서 src 폴더가 있는 경로 탐색
-    for p in sys.path:
-        path = Path(p)
-        if (path / 'src').is_dir():
-            return path
-
-    # 기본값
-    return cwd
-
-project_root = get_project_root()
-if str(project_root) not in sys.path:
-    sys.path.insert(0, str(project_root))
 
 # 에이전트 및 환경 임포트
 from src.agents.q_learning_agent import QLearningAgent

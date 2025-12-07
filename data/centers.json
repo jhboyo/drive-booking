@@ -1,6 +1,6 @@
 {
   "brand": "Hyundai",
-  "description": "현대자동차 시승 센터 데이터 (24개 센터)",
+  "description": "Brand 자동차 시승 센터 데이터 (24개 센터)",
   "centers": [
     {
       "id": "gangnam",
