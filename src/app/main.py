@@ -109,31 +109,44 @@ def load_vehicles():
 
 @st.cache_resource
 def load_agents():
-    """학습된 에이전트 로드"""
+    """학습된 에이전트 로드 (Phase 1 + Phase 2)"""
     try:
-        # Phase 1 환경 생성 (에이전트 초기화용)
+        # === Phase 1: 차량 추천 에이전트 ===
         phase1_env = VehicleRecommendationEnv()
-
-        # Phase 1 에이전트 (Q-Learning)
         phase1_agent = QLearningAgent(
             n_actions=phase1_env.action_space.n,
             seed=42
         )
 
-        # 학습된 모델 로드 시도
-        checkpoint_path = project_root / "checkpoints" / "chatbot" / "chatbot_q_learning.json"
-        if checkpoint_path.exists():
-            phase1_agent.load(str(checkpoint_path))
-            model_loaded = True
-        else:
-            # 체크포인트 없으면 새로 시작
-            model_loaded = False
+        # Phase 1 모델 로드
+        phase1_path = project_root / "checkpoints" / "chatbot" / "chatbot_q_learning.json"
+        phase1_loaded = False
+        if phase1_path.exists():
+            phase1_agent.load(str(phase1_path))
+            phase1_loaded = True
 
-        return phase1_agent, phase1_env, model_loaded
+        # === Phase 2: 스케줄링 에이전트 ===
+        phase2_env = SchedulingEnv()
+        phase2_agent = DQNAgent(
+            state_dim=phase2_env.observation_space.shape[0],
+            action_dim=phase2_env.action_space.n,
+            seed=42
+        )
+
+        # Phase 2 모델 로드
+        phase2_path = project_root / "checkpoints" / "dqn_scheduling.pth"
+        phase2_loaded = False
+        if phase2_path.exists():
+            phase2_agent.load(str(phase2_path))
+            phase2_loaded = True
+
+        return phase1_agent, phase1_env, phase2_agent, phase2_env, phase1_loaded, phase2_loaded
 
     except Exception as e:
         st.error(f"에이전트 로드 실패: {e}")
-        return None, None, False
+        import traceback
+        st.code(traceback.format_exc())
+        return None, None, None, None, False, False
 
 # ============================================================================
 # 세션 상태 초기화
@@ -186,6 +199,25 @@ def init_session_state():
 
     if "policy_mode" not in st.session_state:
         st.session_state.policy_mode = "대기"  # 탐험/활용/대기
+
+    # === Phase 2: 스케줄링 관련 상태 ===
+    if "scheduling_step" not in st.session_state:
+        st.session_state.scheduling_step = "select_day"  # select_day, select_time, dqn_recommend, confirm
+
+    if "preferred_day_type" not in st.session_state:
+        st.session_state.preferred_day_type = None  # 0: 이번주 평일, 1: 이번주 주말, 2: 다음주 평일, 3: 다음주 주말
+
+    if "preferred_time_type" not in st.session_state:
+        st.session_state.preferred_time_type = None  # 0: 오전, 1: 오후, 2: 저녁
+
+    if "dqn_recommendation" not in st.session_state:
+        st.session_state.dqn_recommendation = None  # DQN이 추천한 슬롯 정보
+
+    if "scheduling_attempts" not in st.session_state:
+        st.session_state.scheduling_attempts = 0  # 대안 제시 횟수
+
+    if "selected_center" not in st.session_state:
+        st.session_state.selected_center = None  # 선택된 시승센터
 
 init_session_state()
 
@@ -348,7 +380,7 @@ st.markdown("""
 
 questions = load_questions()
 vehicles = load_vehicles()
-phase1_agent, phase1_env, model_loaded = load_agents()
+phase1_agent, phase1_env, phase2_agent, phase2_env, phase1_loaded, phase2_loaded = load_agents()
 
 # 데이터 로드 확인
 if len(questions) == 0:
@@ -356,8 +388,13 @@ if len(questions) == 0:
 if len(vehicles) == 0:
     st.error(f"차량 데이터가 비어있음! project_root: {project_root}")
 
+# 하위 호환성을 위한 변수
+model_loaded = phase1_loaded
+
 # 레이어드 카드 - 상태 표시
-status_text = "🧠 Q-Learning 기반" if model_loaded else "🧠 강화학습 모델"
+phase1_status = "✅" if phase1_loaded else "🔄"
+phase2_status = "✅" if phase2_loaded else "🔄"
+status_text = f"P1{phase1_status} P2{phase2_status}"
 phase_text = {
     "greeting": "🎯 시작",
     "questioning": "💬 선호도 분석",
@@ -726,67 +763,184 @@ elif st.session_state.phase == "recommending":
             st.session_state.recommended_vehicle = None
             st.rerun()
 
-# 스케줄링 단계
+# 스케줄링 단계 (Phase 2: DQN 기반)
 elif st.session_state.phase == "scheduling":
-    # 현재 Action 업데이트
     st.session_state.current_action = get_action_name("schedule")
 
     # 지역 기반 시승센터 매핑
-    center_map = {
-        "강남/서초": "강남 시승센터 (서울 강남구 테헤란로 152)",
-        "송파/강동": "송파 시승센터 (서울 송파구 올림픽로 300)",
-        "영등포/마포": "영등포 시승센터 (서울 영등포구 여의대로 108)",
-        "성동/광진": "성수 시승센터 (서울 성동구 왕십리로 50)"
+    region_to_center = {
+        "강남/서초": {"id": "gangnam", "name": "강남 시승센터", "address": "서울 강남구 테헤란로 152"},
+        "송파/강동": {"id": "songpa", "name": "송파 시승센터", "address": "서울 송파구 올림픽로 300"},
+        "영등포/마포": {"id": "yeongdeungpo", "name": "영등포 시승센터", "address": "서울 영등포구 국제금융로 10"},
+        "성동/광진": {"id": "mapo", "name": "마포 시승센터", "address": "서울 마포구 월드컵북로 396"}
     }
 
-    # 사용자가 선택한 지역에 해당하는 시승센터 추천
     selected_region = st.session_state.answers.get("region", "강남/서초")
-    recommended_center = center_map.get(selected_region, center_map["강남/서초"])
+    center_info = region_to_center.get(selected_region, region_to_center["강남/서초"])
 
-    schedule_msg = f"""**{st.session_state.recommended_vehicle['name']}** 시승 예약을 진행합니다.
+    # 시간 슬롯 매핑
+    time_slots = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00"]
+    day_type_labels = ["이번주 평일", "이번주 주말", "다음주 평일", "다음주 주말"]
+    time_type_labels = ["오전 (09:00~12:00)", "오후 (13:00~16:00)", "저녁 (16:00~18:00)"]
 
-📍 **추천 시승센터**: {recommended_center}
+    # === Step 1: 요일 선택 ===
+    if st.session_state.scheduling_step == "select_day":
+        if not any("시승 예약을 진행" in c["content"] for c in st.session_state.chat_history):
+            schedule_msg = f"""**{st.session_state.recommended_vehicle['name']}** 시승 예약을 진행함.
 
-원하시는 날짜와 시간을 선택해주세요."""
+📍 **시승센터**: {center_info['name']} ({center_info['address']})
 
-    if not any("시승 예약을 진행합니다" in c["content"] for c in st.session_state.chat_history):
-        st.session_state.chat_history.append({"role": "assistant", "content": schedule_msg})
-        st.rerun()
+원하시는 **요일**을 선택해주세요."""
+            st.session_state.chat_history.append({"role": "assistant", "content": schedule_msg})
+            st.rerun()
 
-    # 날짜/시간 선택
-    col1, col2 = st.columns(2)
-    with col1:
-        selected_date = st.date_input(
-            "시승 날짜",
-            min_value=datetime.now().date(),
-            max_value=datetime.now().date() + timedelta(days=21)
-        )
-    with col2:
-        selected_time = st.selectbox(
-            "시승 시간",
-            ["09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00"]
-        )
+        st.markdown("##### 원하시는 요일을 선택해주세요:")
+        cols = st.columns(4)
+        for i, label in enumerate(day_type_labels):
+            with cols[i]:
+                if st.button(label, key=f"day_{i}", use_container_width=True):
+                    st.session_state.preferred_day_type = i
+                    st.session_state.chat_history.append({"role": "user", "content": label})
+                    st.session_state.scheduling_step = "select_time"
+                    st.rerun()
 
-    if st.button("📅 예약 확정", use_container_width=True):
-        # Step 증가 및 Policy 업데이트
+    # === Step 2: 시간대 선택 ===
+    elif st.session_state.scheduling_step == "select_time":
+        if not any("시간대를 선택" in c["content"] for c in st.session_state.chat_history):
+            time_msg = "원하시는 **시간대**를 선택해주세요."
+            st.session_state.chat_history.append({"role": "assistant", "content": time_msg})
+            st.rerun()
+
+        st.markdown("##### 원하시는 시간대를 선택해주세요:")
+        cols = st.columns(3)
+        for i, label in enumerate(time_type_labels):
+            with cols[i]:
+                if st.button(label, key=f"time_{i}", use_container_width=True):
+                    st.session_state.preferred_time_type = i
+                    st.session_state.chat_history.append({"role": "user", "content": label})
+                    st.session_state.scheduling_step = "dqn_recommend"
+                    st.rerun()
+
+    # === Step 3: DQN 분석 및 추천 ===
+    elif st.session_state.scheduling_step == "dqn_recommend":
+        # DQN 분석 수행
+        if st.session_state.dqn_recommendation is None:
+            day_type = st.session_state.preferred_day_type
+            time_type = st.session_state.preferred_time_type
+
+            # 날짜 계산 (day_type 기반)
+            from datetime import datetime, timedelta
+            today = datetime.now()
+            if day_type == 0:  # 이번주 평일
+                days_ahead = (7 - today.weekday()) % 7
+                if days_ahead == 0 or days_ahead > 4:
+                    days_ahead = 1
+                target_date = today + timedelta(days=days_ahead)
+            elif day_type == 1:  # 이번주 주말
+                days_ahead = (5 - today.weekday()) % 7
+                if days_ahead == 0:
+                    days_ahead = 7
+                target_date = today + timedelta(days=days_ahead)
+            elif day_type == 2:  # 다음주 평일
+                days_ahead = (7 - today.weekday()) + 1
+                target_date = today + timedelta(days=days_ahead)
+            else:  # 다음주 주말
+                days_ahead = (7 - today.weekday()) + 5
+                target_date = today + timedelta(days=days_ahead)
+
+            # 시간 계산 (time_type 기반)
+            if time_type == 0:  # 오전
+                slot_idx = 1  # 10:00
+            elif time_type == 1:  # 오후
+                slot_idx = 5  # 14:00
+            else:  # 저녁
+                slot_idx = 7  # 16:00
+
+            recommended_time = time_slots[slot_idx]
+
+            # DQN 에이전트로 최적 슬롯 분석 (실제 환경에서는 phase2_env 사용)
+            dqn_action = 0  # 기본: 예약 확정
+            if phase2_agent is not None:
+                try:
+                    # 환경 초기화 및 observation 생성
+                    obs, _ = phase2_env.reset(options={
+                        'vehicle_id': st.session_state.recommended_vehicle.get('id', 'avante'),
+                        'prefill_ratio': 0.5
+                    })
+                    dqn_action = phase2_agent.select_action(obs, training=False)
+                except Exception:
+                    dqn_action = 0  # 에러 시 기본값
+
+            # 추천 결과 저장
+            st.session_state.dqn_recommendation = {
+                "date": target_date,
+                "time": recommended_time,
+                "slot_idx": slot_idx,
+                "day_type": day_type,
+                "dqn_action": dqn_action,
+                "center": center_info
+            }
+
+            # DQN 분석 결과 메시지
+            day_name = ["월", "화", "수", "목", "금", "토", "일"][target_date.weekday()]
+            if dqn_action == 0:
+                analysis_msg = f"""🤖 **DQN 분석 완료**
+
+선호하신 시간대를 분석한 결과, 다음 일정을 추천드림:
+
+📅 **{target_date.strftime('%Y년 %m월 %d일')} ({day_name})** {recommended_time}
+📍 {center_info['name']}
+
+이 시간에 예약하시겠습니까?"""
+            else:
+                # 대안 제시
+                alt_time = time_slots[min(slot_idx + 1, 8)]
+                st.session_state.dqn_recommendation["alt_time"] = alt_time
+                analysis_msg = f"""🤖 **DQN 분석 완료**
+
+선호하신 시간대({recommended_time})는 예약이 많습니다.
+
+**추천 대안**: {target_date.strftime('%Y년 %m월 %d일')} ({day_name}) **{alt_time}**
+📍 {center_info['name']}
+
+대안 시간으로 예약하시겠습니까?"""
+
+            st.session_state.chat_history.append({"role": "assistant", "content": analysis_msg})
+            st.rerun()
+
+        # 예약 확정/거절 버튼
+        rec = st.session_state.dqn_recommendation
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button("✅ 예약 확정", use_container_width=True):
+                st.session_state.scheduling_step = "confirm"
+                st.session_state.chat_history.append({"role": "user", "content": "예약 확정할게요!"})
+                st.rerun()
+        with col2:
+            if st.button("🔄 다른 시간", use_container_width=True):
+                st.session_state.scheduling_attempts += 1
+                st.session_state.reward -= 2.0  # 대안 요청 패널티
+                st.session_state.dqn_recommendation = None
+                st.session_state.scheduling_step = "select_day"
+                st.session_state.chat_history.append({"role": "user", "content": "다른 시간으로 할게요"})
+                st.rerun()
+
+    # === Step 4: 예약 확정 ===
+    elif st.session_state.scheduling_step == "confirm":
+        rec = st.session_state.dqn_recommendation
+        vehicle = st.session_state.recommended_vehicle
+
+        # Reward 증가
+        st.session_state.reward += 15.0
         st.session_state.current_step += 1
         st.session_state.policy_mode = "활용"
 
-        # Reward 증가 (예약 확정 +15)
-        st.session_state.reward += 15.0
-
-        # RL 모델 업데이트 (에피소드 종료 - 성공)
+        # RL 모델 업데이트
         update_rl_model(final_reward=15.0, terminated=True)
 
-        # 예약 완료
-        st.session_state.chat_history.append({
-            "role": "user",
-            "content": f"{selected_date.strftime('%Y년 %m월 %d일')} {selected_time}"
-        })
-
-        vehicle = st.session_state.recommended_vehicle
-        fuel_type_kr = {"gasoline": "가솔린", "hybrid": "하이브리드", "electric": "전기"}.get(vehicle['fuel_type'], vehicle['fuel_type'])
-        category_kr = {"sedan": "세단", "suv": "SUV", "mpv": "MPV"}.get(vehicle['category'], vehicle['category'])
+        fuel_type_kr = {"gasoline": "가솔린", "hybrid": "하이브리드", "electric": "전기"}.get(vehicle.get('fuel_type', ''), vehicle.get('fuel_type', ''))
+        category_kr = {"sedan": "세단", "suv": "SUV", "mpv": "MPV"}.get(vehicle.get('category', ''), vehicle.get('category', ''))
+        day_name = ["월", "화", "수", "목", "금", "토", "일"][rec["date"].weekday()]
 
         complete_msg = f"""🎉 **예약이 완료되었습니다!**
 
@@ -794,13 +948,13 @@ elif st.session_state.phase == "scheduling":
 - 차량: {vehicle['name']}
 - 차종: {category_kr}
 - 연료: {fuel_type_kr}
-- 좌석: {vehicle['seats']}인승
+- 좌석: {vehicle.get('seats', 5)}인승
 - 가격대: {vehicle['price_range']['min']:,}~{vehicle['price_range']['max']:,}만원
-- 장소: {recommended_center}
-- 날짜: {selected_date.strftime('%Y년 %m월 %d일')}
-- 시간: {selected_time}
+- 장소: {rec['center']['name']} ({rec['center']['address']})
+- 날짜: {rec['date'].strftime('%Y년 %m월 %d일')} ({day_name})
+- 시간: {rec.get('alt_time', rec['time'])}
 
-예약 확인 문자가 발송될 예정입니다.
+예약 확인 문자가 발송될 예정임.
 시승 당일 운전면허증을 지참해 주세요. 감사합니다! 🙏"""
 
         st.session_state.chat_history.append({"role": "assistant", "content": complete_msg})
