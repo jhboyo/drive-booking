@@ -141,6 +141,13 @@ def init_session_state():
     if "current_action" not in st.session_state:
         st.session_state.current_action = "대기 중"
 
+    # MDP 시각화용 추가 변수
+    if "current_step" not in st.session_state:
+        st.session_state.current_step = 0  # 현재 에피소드 스텝
+
+    if "policy_mode" not in st.session_state:
+        st.session_state.policy_mode = "대기"  # 탐험/활용/대기
+
 init_session_state()
 
 # ============================================================================
@@ -258,13 +265,20 @@ def update_rl_model(final_reward: float, terminated: bool = True):
 
 
 def save_model():
-    """학습된 모델 저장"""
+    """학습된 모델 저장 (5 에피소드마다 standalone 모델과 동기화)"""
     if phase1_agent is None:
         return
 
-    checkpoint_path = project_root / "checkpoints" / "chatbot" / "chatbot_q_learning.json"
-    checkpoint_path.parent.mkdir(parents=True, exist_ok=True)
-    phase1_agent.save(str(checkpoint_path))
+    # 챗봇 모델 저장 (매 에피소드)
+    chatbot_path = project_root / "checkpoints" / "chatbot" / "chatbot_q_learning.json"
+    chatbot_path.parent.mkdir(parents=True, exist_ok=True)
+    phase1_agent.save(str(chatbot_path))
+
+    # 5 에피소드마다 standalone 모델과 동기화
+    if phase1_agent.episode_count % 5 == 0:
+        standalone_path = project_root / "checkpoints" / "standalone" / "q_learning_model.json"
+        standalone_path.parent.mkdir(parents=True, exist_ok=True)
+        phase1_agent.save(str(standalone_path))
 
 
 def record_trajectory(action: int, reward: float):
@@ -322,9 +336,27 @@ else:
 # 모델 통계
 episode_count = phase1_agent.episode_count if phase1_agent else 0
 q_table_size = len(phase1_agent.q_table) if phase1_agent else 0
+epsilon = phase1_agent.epsilon if phase1_agent else 1.0
 
-# 현재 Action
+# 현재 MDP 상태
 current_action = st.session_state.current_action
+current_step = st.session_state.current_step
+policy_mode = st.session_state.policy_mode
+state_progress = f"{len(st.session_state.questions_asked)}/8"
+
+# Policy 색상
+if policy_mode == "탐험":
+    policy_color = "#7C3AED"
+    policy_bg = "#EDE9FE"
+    policy_icon = "🔍"
+elif policy_mode == "활용":
+    policy_color = "#059669"
+    policy_bg = "#D1FAE5"
+    policy_icon = "🎯"
+else:
+    policy_color = "#6B7280"
+    policy_bg = "#F3F4F6"
+    policy_icon = "⏸️"
 
 st.markdown(f"""
 <div class="layered-card" style="padding: 1.2rem;">
@@ -336,7 +368,7 @@ st.markdown(f"""
         </div>
     </div>
     <p style="color: #555; font-size: 0.85rem; margin: 0 0 0.8rem 0; text-align: center;">Brand 차 시승 예약 도우미입니다.</p>
-    <div style="display: flex; gap: 0.5rem; margin-bottom: 0.8rem;">
+    <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
         <div style="flex: 1; background: #FEF3C7; border-radius: 12px; padding: 0.5rem 0.8rem; display: flex; justify-content: space-between; align-items: center;">
             <span style="color: #92400E; font-size: 0.75rem; font-weight: 500;">🎯 Action</span>
             <span style="color: #B45309; font-size: 0.85rem; font-weight: 600;">{current_action}</span>
@@ -346,11 +378,29 @@ st.markdown(f"""
             <span style="color: {reward_color}; font-size: 1rem; font-weight: 700;">{reward:+.1f}</span>
         </div>
     </div>
+    <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+        <div style="flex: 1; background: #F0FDF4; border-radius: 12px; padding: 0.4rem 0.6rem; display: flex; justify-content: space-between; align-items: center;">
+            <span style="color: #166534; font-size: 0.7rem; font-weight: 500;">📋 State</span>
+            <span style="color: #15803D; font-size: 0.8rem; font-weight: 600;">{state_progress}</span>
+        </div>
+        <div style="flex: 1; background: #FDF4FF; border-radius: 12px; padding: 0.4rem 0.6rem; display: flex; justify-content: space-between; align-items: center;">
+            <span style="color: #86198F; font-size: 0.7rem; font-weight: 500;">🎲 ε</span>
+            <span style="color: #A21CAF; font-size: 0.8rem; font-weight: 600;">{epsilon:.2f}</span>
+        </div>
+        <div style="flex: 1; background: #FFF7ED; border-radius: 12px; padding: 0.4rem 0.6rem; display: flex; justify-content: space-between; align-items: center;">
+            <span style="color: #9A3412; font-size: 0.7rem; font-weight: 500;">👣 Step</span>
+            <span style="color: #C2410C; font-size: 0.8rem; font-weight: 600;">{current_step}</span>
+        </div>
+        <div style="flex: 1; background: {policy_bg}; border-radius: 12px; padding: 0.4rem 0.6rem; display: flex; justify-content: space-between; align-items: center;">
+            <span style="color: {policy_color}; font-size: 0.7rem; font-weight: 500;">{policy_icon} Policy</span>
+            <span style="color: {policy_color}; font-size: 0.8rem; font-weight: 600;">{policy_mode}</span>
+        </div>
+    </div>
     <div style="background: #EFF6FF; border-radius: 12px; padding: 0.5rem 1rem; margin-bottom: 0.5rem; display: flex; justify-content: space-around; align-items: center;">
         <span style="color: #3B82F6; font-size: 0.75rem; font-weight: 500;">📊 Episodes: {episode_count}</span>
         <span style="color: #3B82F6; font-size: 0.75rem; font-weight: 500;">🧠 Q-states: {q_table_size}</span>
     </div>
-    <p style="margin: 0; color: #6B7280; font-size: 0.75rem; text-align: center;">추가질문 -1 | 다른차량 -5 | 예약확정 +15</p>
+    <p style="margin: 0; color: #6B7280; font-size: 0.7rem; text-align: center;">추가질문 -1 | 다른차량 -5 | 예약확정 +15</p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -466,9 +516,11 @@ with chat_container:
 if st.session_state.phase == "greeting":
     # 현재 Action: 대기 중
     st.session_state.current_action = get_action_name("waiting")
+    st.session_state.policy_mode = "대기"
 
     if st.button("🚀 시작하기", type="secondary"):
         st.session_state.phase = "questioning"
+        st.session_state.current_step = 0  # 에피소드 시작 시 Step 초기화
         st.session_state.chat_history.append({"role": "user", "content": "시작할게요!"})
         st.rerun()
 
@@ -528,6 +580,17 @@ elif st.session_state.phase == "questioning":
                     st.session_state.answers[current_q["attribute"]] = option
                     st.session_state.questions_asked.append(current_q["id"])
                     st.session_state.current_question_idx = None
+
+                    # Step 증가
+                    st.session_state.current_step += 1
+
+                    # Policy 모드 결정 (ε-greedy)
+                    if phase1_agent and phase1_agent.epsilon > 0:
+                        import random
+                        if random.random() < phase1_agent.epsilon:
+                            st.session_state.policy_mode = "탐험"
+                        else:
+                            st.session_state.policy_mode = "활용"
 
                     # Reward 감소 (필수 4개 질문 이후 추가 질문만 -1)
                     is_required_question = current_q.get("attribute") in required_attributes
@@ -598,11 +661,15 @@ elif st.session_state.phase == "recommending":
     col1, col2 = st.columns(2)
     with col1:
         if st.button("✅ 시승 예약하기", use_container_width=True):
+            st.session_state.current_step += 1
+            st.session_state.policy_mode = "활용"
             st.session_state.chat_history.append({"role": "user", "content": "시승 예약할게요!"})
             st.session_state.phase = "scheduling"
             st.rerun()
     with col2:
         if st.button("🔄 다른 차량 보기", use_container_width=True):
+            st.session_state.current_step += 1
+            st.session_state.policy_mode = "탐험"
             st.session_state.chat_history.append({"role": "user", "content": "다른 차량도 보고 싶어요"})
             # Reward 감소 (다른 차량 요청 -5)
             st.session_state.reward -= 5.0
@@ -654,6 +721,10 @@ elif st.session_state.phase == "scheduling":
         )
 
     if st.button("📅 예약 확정", use_container_width=True):
+        # Step 증가 및 Policy 업데이트
+        st.session_state.current_step += 1
+        st.session_state.policy_mode = "활용"
+
         # Reward 증가 (예약 확정 +15)
         st.session_state.reward += 15.0
 
