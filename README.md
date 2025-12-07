@@ -1,12 +1,9 @@
 # 강화학습 기반 대화형 차량 추천 및 스케줄링 시스템
 
-> **Conversational Vehicle Recommendation and Scheduling System using Reinforcement Learning**
-
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://drive-booking-rl.streamlit.app/)
-
-**🚀 [실시간 데모 바로가기](https://drive-booking-rl.streamlit.app/)** - 학습된 강화학습 모델을 직접 체험해볼 수 있음
+**Conversational Vehicle Recommendation and Scheduling System using Reinforcement Learning**
 
 ---
+
 
 ## 💡 연구 동기
 
