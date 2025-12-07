@@ -41,34 +41,30 @@
 
 ---
 
-## 🎯 실행 결과 (Chatbot Demo)
+## 📱 실행 결과 (Mobile App Demo)
 
-### 대화형 추천 시스템 UI
+### 모바일 최적화 대화형 추천 시스템
 
-학습된 Q-Learning 모델을 Streamlit 기반 챗봇 UI와 연동하여 실시간 대화형 추천 시스템을 구현함.
+학습된 Q-Learning 모델을 **모바일 친화적 UI**로 구현하여 실시간 대화형 추천 시스템을 제공함.
 
-#### 시스템 시작 화면
-![시작 화면](./docs/chat/chat1.png)
-- MDP 상태 시각화: Action, Reward, State, ε, Step, Policy
-- Q-Learning 모델 통계: Episodes, Q-states 실시간 표시
+> 🎯 **모바일 앱 특징**: 터치 기반 인터페이스, 반응형 디자인, 실시간 MDP 상태 시각화
 
-#### 질문 기반 선호도 수집
-![질문 단계](./docs/chat/chat2.png)
-- 필수 질문 4개: 용도, 연료타입, 가족구성원, 지역
-- 추가 질문 시 Reward -1 적용
-- ε-greedy Policy 표시 (탐험/활용)
+<p align="center">
+  <img src="./docs/chat/chat1.png" width="280" alt="시작 화면"/>
+  <img src="./docs/chat/chat2.png" width="280" alt="질문 단계"/>
+</p>
 
-#### 차량 추천 결과
-![추천 결과](./docs/chat/chat3.png)
-- 고객 응답 기반 최적 차량 추천
-- 차량 상세 정보 표시 (차종, 연료, 좌석, 가격대)
-- "다른 차량 보기" 선택 시 Reward -5
+<p align="center">
+  <img src="./docs/chat/chat3.png" width="280" alt="추천 결과"/>
+  <img src="./docs/chat/chat4.png" width="280" alt="예약 완료"/>
+</p>
 
-#### 시승 예약 완료
-![예약 완료](./docs/chat/chat4.png)
-- 지역 기반 시승센터 자동 매칭
-- 예약 확정 시 Reward +15
-- RL 모델 자동 업데이트 (5 에피소드마다 동기화)
+| 단계 | 화면 | 설명 |
+|------|------|------|
+| **1. 시작** | 좌측 상단 | MDP 상태 시각화 (Action, Reward, State, ε, Step, Policy) |
+| **2. 질문** | 우측 상단 | 필수 질문 4개 수집, ε-greedy Policy 표시 |
+| **3. 추천** | 좌측 하단 | 고객 응답 기반 최적 차량 추천, 상세 정보 표시 |
+| **4. 완료** | 우측 하단 | 지역 기반 시승센터 매칭, 예약 확정 (Reward +15) |
 
 ### MDP 시각화 요소
 
@@ -95,6 +91,8 @@
 ## 📋 프로젝트 개요
 
 자동차 브랜드 홈페이지의 시승 예약 과정에서 고객이 겪는 번거로움을 **강화학습 기반 대화형 추천 시스템**으로 해결함.
+
+> 📱 **모바일 앱으로 구현**: Streamlit 기반 반응형 웹앱으로 모바일 환경에서 최적화된 사용자 경험 제공
 
 ### 강화학습 관점의 문제 정의
 
