@@ -10,16 +10,7 @@ project_root = Path(__file__).parent.resolve()
 if str(project_root) not in sys.path:
     sys.path.insert(0, str(project_root))
 
-# 이제 src 모듈을 직접 import 가능
-# main.py의 코드를 실행 (exec 대신 importlib 사용)
-import importlib.util
-
-main_path = project_root / "src" / "app" / "main.py"
-spec = importlib.util.spec_from_file_location("main", str(main_path))
-main_module = importlib.util.module_from_spec(spec)
-
-# __file__ 설정
-main_module.__file__ = str(main_path)
-
-# 모듈 실행
-spec.loader.exec_module(main_module)
+# main.py를 패키지 모듈로 직접 import
+# importlib.util 대신 일반 import를 사용하면 Python의 정상적인
+# 모듈 해석 메커니즘이 작동하여 src.env 등을 올바르게 찾음
+from src.app import main  # noqa: F401
