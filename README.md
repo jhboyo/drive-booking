@@ -50,10 +50,10 @@
 > 🎯 **모바일 앱 특징**: 터치 기반 인터페이스, 반응형 디자인, 실시간 MDP 상태 시각화
 
 <p align="center">
-  <img src="./docs/chat/chat1.png" width="220" height="450" style="border: 8px solid #333; border-radius: 20px; margin: 5px; object-fit: cover; object-position: top;" alt="시작 화면"/>
-  <img src="./docs/chat/chat2.png" width="220" height="450" style="border: 8px solid #333; border-radius: 20px; margin: 5px; object-fit: cover; object-position: top;" alt="질문 단계"/>
-  <img src="./docs/chat/chat3.png" width="220" height="450" style="border: 8px solid #333; border-radius: 20px; margin: 5px; object-fit: cover; object-position: top;" alt="추천 결과"/>
-  <img src="./docs/chat/chat4.png" width="220" height="450" style="border: 8px solid #333; border-radius: 20px; margin: 5px; object-fit: cover; object-position: top;" alt="예약 완료"/>
+  <img src="./docs/chat/chat1.png" width="220" height="450" style="border: 8px solid #333; border-radius: 20px; margin: 5px; object-fit: cover; object-position: center top;" alt="시작 화면"/>
+  <img src="./docs/chat/chat2.png" width="220" height="450" style="border: 8px solid #333; border-radius: 20px; margin: 5px; object-fit: cover; object-position: center top;" alt="질문 단계"/>
+  <img src="./docs/chat/chat3.png" width="220" height="450" style="border: 8px solid #333; border-radius: 20px; margin: 5px; object-fit: cover; object-position: center top;" alt="추천 결과"/>
+  <img src="./docs/chat/chat4.png" width="220" height="450" style="border: 8px solid #333; border-radius: 20px; margin: 5px; object-fit: cover; object-position: center top;" alt="예약 완료"/>
 </p>
 
 | 단계 | 화면 | 설명 |
